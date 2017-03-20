@@ -152,6 +152,8 @@ public class MediaIDHelper {
         // media id
         MediaControllerCompat controller = ((FragmentActivity) context)
                 .getSupportMediaController();
+
+
         if (controller != null && controller.getMetadata() != null) {
             String currentPlayingMediaId = controller.getMetadata().getDescription()
                     .getMediaId();

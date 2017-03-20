@@ -16,9 +16,13 @@
 
 package com.example.android.uamp.model;
 
+import android.support.annotation.NonNull;
 import android.support.v4.media.MediaMetadataCompat;
+import android.util.Log;
 
 import com.example.android.uamp.utils.LogHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,6 +57,39 @@ public class RemoteJSONSource implements MusicProviderSource {
     private static final String JSON_TRACK_NUMBER = "trackNumber";
     private static final String JSON_TOTAL_TRACK_COUNT = "totalTrackCount";
     private static final String JSON_DURATION = "duration";
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser firebaseUser;
+
+    public RemoteJSONSource() {
+        // Firebase Authentication
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + firebaseUser.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    public void detachAuthListener()
+    {
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
 
     @Override
     public Iterator<MediaMetadataCompat> iterator() {

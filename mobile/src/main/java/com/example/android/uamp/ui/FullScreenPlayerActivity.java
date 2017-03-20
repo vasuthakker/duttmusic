@@ -349,13 +349,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             return;
         }
         mLastPlaybackState = state;
-        if (getSupportMediaController() != null && getSupportMediaController().getExtras() != null) {
-            String castName = getSupportMediaController()
-                    .getExtras().getString(MusicService.EXTRA_CONNECTED_CAST);
-            String line3Text = castName == null ? "" : getResources()
-                        .getString(R.string.casting_to_device, castName);
-            mLine3.setText(line3Text);
-        }
+
 
         switch (state.getState()) {
             case PlaybackStateCompat.STATE_PLAYING:

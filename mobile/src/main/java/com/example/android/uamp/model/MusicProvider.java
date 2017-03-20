@@ -41,10 +41,6 @@ import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_MUSICS_BY_GE
 import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_ROOT;
 import static com.example.android.uamp.utils.MediaIDHelper.createMediaID;
 
-/**
- * Simple data provider for music tracks. The actual metadata source is delegated to a
- * MusicProviderSource defined by a constructor argument of this class.
- */
 public class MusicProvider {
 
     private static final String TAG = LogHelper.makeLogTag(MusicProvider.class);

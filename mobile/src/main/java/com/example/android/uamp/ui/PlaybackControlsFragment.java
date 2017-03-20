@@ -223,12 +223,7 @@ public class PlaybackControlsFragment extends Fragment {
         MediaControllerCompat controller = ((FragmentActivity) getActivity())
                 .getSupportMediaController();
         String extraInfo = null;
-        if (controller != null && controller.getExtras() != null) {
-            String castName = controller.getExtras().getString(MusicService.EXTRA_CONNECTED_CAST);
-            if (castName != null) {
-                extraInfo = getResources().getString(R.string.casting_to_device, castName);
-            }
-        }
+
         setExtraInfo(extraInfo);
     }
 
