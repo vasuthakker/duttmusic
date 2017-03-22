@@ -52,4 +52,9 @@ public class SimpleMusicProviderSource implements MusicProviderSource {
         return mData.iterator();
     }
 
+    @Override
+    public void stopMusic() {
+
+    }
+
 }

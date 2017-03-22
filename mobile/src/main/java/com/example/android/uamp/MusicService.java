@@ -5,7 +5,6 @@ package com.example.android.uamp;
  import android.content.BroadcastReceiver;
  import android.content.Context;
  import android.content.Intent;
- import android.content.IntentFilter;
  import android.os.Bundle;
  import android.os.Handler;
  import android.os.Message;
@@ -20,18 +19,12 @@ package com.example.android.uamp;
  import android.support.v7.media.MediaRouter;
 
  import com.example.android.uamp.model.MusicProvider;
- import com.example.android.uamp.playback.CastPlayback;
  import com.example.android.uamp.playback.LocalPlayback;
- import com.example.android.uamp.playback.Playback;
  import com.example.android.uamp.playback.PlaybackManager;
  import com.example.android.uamp.playback.QueueManager;
  import com.example.android.uamp.ui.NowPlayingActivity;
- import com.example.android.uamp.utils.CarHelper;
  import com.example.android.uamp.utils.LogHelper;
  import com.example.android.uamp.utils.WearHelper;
- import com.google.android.gms.cast.framework.CastContext;
- import com.google.android.gms.cast.framework.CastSession;
- import com.google.android.gms.cast.framework.SessionManagerListener;
 
  import java.lang.ref.WeakReference;
  import java.util.ArrayList;
@@ -136,7 +129,6 @@ public class MusicService extends MediaBrowserServiceCompat implements
         mSession.setSessionActivity(pi);
 
         mSessionExtras = new Bundle();
-        CarHelper.setSlotReservationFlags(mSessionExtras, true, true, true);
         WearHelper.setSlotReservationFlags(mSessionExtras, true, true);
         WearHelper.setUseBackgroundFromTheme(mSessionExtras, true);
         mSession.setExtras(mSessionExtras);
@@ -152,7 +144,6 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
         mMediaRouter = MediaRouter.getInstance(getApplicationContext());
 
-        registerCarConnectionReceiver();
     }
 
     /**
@@ -167,8 +158,6 @@ public class MusicService extends MediaBrowserServiceCompat implements
             if (ACTION_CMD.equals(action)) {
                 if (CMD_PAUSE.equals(command)) {
                     mPlaybackManager.handlePauseRequest();
-                } else if (CMD_STOP_CASTING.equals(command)) {
-                    CastContext.getSharedInstance(this).getSessionManager().endCurrentSession(true);
                 }
             } else {
                 // Try to handle the intent as a media button event wrapped by MediaButtonReceiver
@@ -280,19 +269,6 @@ public class MusicService extends MediaBrowserServiceCompat implements
         mSession.setPlaybackState(newState);
     }
 
-    private void registerCarConnectionReceiver() {
-        IntentFilter filter = new IntentFilter(CarHelper.ACTION_MEDIA_STATUS);
-        mCarConnectionReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String connectionEvent = intent.getStringExtra(CarHelper.MEDIA_CONNECTION_STATUS);
-                mIsConnectedToCar = CarHelper.MEDIA_CONNECTED.equals(connectionEvent);
-                LogHelper.i(TAG, "Connection event to Android Auto: ", connectionEvent,
-                        " isConnectedToCar=", mIsConnectedToCar);
-            }
-        };
-        registerReceiver(mCarConnectionReceiver, filter);
-    }
 
     private void unregisterCarConnectionReceiver() {
         unregisterReceiver(mCarConnectionReceiver);

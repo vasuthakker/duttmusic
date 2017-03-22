@@ -19,8 +19,12 @@ package com.example.android.uamp.model;
 import android.support.annotation.NonNull;
 import android.support.v4.media.MediaMetadataCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.android.uamp.utils.LogHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -42,10 +46,10 @@ import java.util.Iterator;
  */
 public class RemoteJSONSource implements MusicProviderSource {
 
-    private static final String TAG = LogHelper.makeLogTag(RemoteJSONSource.class);
+    private static final String TAG = "RemoteJSONSource";
 
     protected static final String CATALOG_URL =
-        "http://storage.googleapis.com/automotive-media/music.json";
+            "http://storage.googleapis.com/automotive-media/music.json";
 
     private static final String JSON_MUSIC = "music";
     private static final String JSON_TITLE = "title";
@@ -64,7 +68,7 @@ public class RemoteJSONSource implements MusicProviderSource {
 
     public RemoteJSONSource() {
         // Firebase Authentication
-        mAuth = FirebaseAuth.getInstance();
+      /*  mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -77,19 +81,25 @@ public class RemoteJSONSource implements MusicProviderSource {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
+
             }
         };
 
         mAuth.addAuthStateListener(mAuthListener);
+
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInAnonymously:onComplete:" + task.isSuccessful());
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInAnonymously", task.getException());
+
+                        }
+                    }
+                });*/
     }
 
-    public void detachAuthListener()
-    {
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
 
     @Override
     public Iterator<MediaMetadataCompat> iterator() {
@@ -100,7 +110,6 @@ public class RemoteJSONSource implements MusicProviderSource {
             ArrayList<MediaMetadataCompat> tracks = new ArrayList<>();
             if (jsonObj != null) {
                 JSONArray jsonTracks = jsonObj.getJSONArray(JSON_MUSIC);
-
                 if (jsonTracks != null) {
                     for (int j = 0; j < jsonTracks.length(); j++) {
                         tracks.add(buildFromJSON(jsonTracks.getJSONObject(j), path));
@@ -111,6 +120,13 @@ public class RemoteJSONSource implements MusicProviderSource {
         } catch (JSONException e) {
             LogHelper.e(TAG, e, "Could not retrieve music list");
             throw new RuntimeException("Could not retrieve music list", e);
+        }
+    }
+
+    @Override
+    public void stopMusic() {
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 

@@ -53,6 +53,7 @@ public class MusicProvider {
 
     private final Set<String> mFavoriteTracks;
 
+
     enum State {
         NON_INITIALIZED, INITIALIZING, INITIALIZED
     }
@@ -66,11 +67,17 @@ public class MusicProvider {
     public MusicProvider() {
         this(new RemoteJSONSource());
     }
+
+
     public MusicProvider(MusicProviderSource source) {
         mSource = source;
         mMusicListByGenre = new ConcurrentHashMap<>();
         mMusicListById = new ConcurrentHashMap<>();
         mFavoriteTracks = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+    }
+
+    public void stopProvider() {
+        mSource.stopMusic();
     }
 
     /**
@@ -93,7 +100,7 @@ public class MusicProvider {
             return Collections.emptyList();
         }
         List<MediaMetadataCompat> shuffled = new ArrayList<>(mMusicListById.size());
-        for (MutableMediaMetadata mutableMetadata: mMusicListById.values()) {
+        for (MutableMediaMetadata mutableMetadata : mMusicListById.values()) {
             shuffled.add(mutableMetadata.metadata);
         }
         Collections.shuffle(shuffled);
@@ -102,19 +109,21 @@ public class MusicProvider {
 
     /**
      * Get music tracks of the given genre
-     *
      */
     public Iterable<MediaMetadataCompat> getMusicsByGenre(String genre) {
-        if (mCurrentState != State.INITIALIZED || !mMusicListByGenre.containsKey(genre)) {
+        /*if (mCurrentState != State.INITIALIZED || !mMusicListByGenre.containsKey(genre)) {
             return Collections.emptyList();
+        }*/
+        List<MediaMetadataCompat> medias = new ArrayList<>();
+        for (String key : mMusicListByGenre.keySet()) {
+            medias.addAll(mMusicListByGenre.get(key));
         }
-        return mMusicListByGenre.get(genre);
+        return medias;
     }
 
     /**
      * Very basic implementation of a search that filter music tracks with title containing
      * the given query.
-     *
      */
     public Iterable<MediaMetadataCompat> searchMusicBySongTitle(String query) {
         return searchMusic(MediaMetadataCompat.METADATA_KEY_TITLE, query);
@@ -123,7 +132,6 @@ public class MusicProvider {
     /**
      * Very basic implementation of a search that filter music tracks with album containing
      * the given query.
-     *
      */
     public Iterable<MediaMetadataCompat> searchMusicByAlbum(String query) {
         return searchMusic(MediaMetadataCompat.METADATA_KEY_ALBUM, query);
@@ -132,7 +140,6 @@ public class MusicProvider {
     /**
      * Very basic implementation of a search that filter music tracks with artist containing
      * the given query.
-     *
      */
     public Iterable<MediaMetadataCompat> searchMusicByArtist(String query) {
         return searchMusic(MediaMetadataCompat.METADATA_KEY_ARTIST, query);
@@ -146,7 +153,7 @@ public class MusicProvider {
         query = query.toLowerCase(Locale.US);
         for (MutableMediaMetadata track : mMusicListById.values()) {
             if (track.metadata.getString(metadataField).toLowerCase(Locale.US)
-                .contains(query)) {
+                    .contains(query)) {
                 result.add(track.metadata);
             }
         }
@@ -253,7 +260,6 @@ public class MusicProvider {
         try {
             if (mCurrentState == State.NON_INITIALIZED) {
                 mCurrentState = State.INITIALIZING;
-
                 Iterator<MediaMetadataCompat> tracks = mSource.iterator();
                 while (tracks.hasNext()) {
                     MediaMetadataCompat item = tracks.next();
@@ -284,8 +290,13 @@ public class MusicProvider {
             mediaItems.add(createBrowsableMediaItemForRoot(resources));
 
         } else if (MEDIA_ID_MUSICS_BY_GENRE.equals(mediaId)) {
-            for (String genre : getGenres()) {
+            /*for (String genre : getGenres()) {
                 mediaItems.add(createBrowsableMediaItemForGenre(genre, resources));
+            }*/
+            //String genre = MediaIDHelper.getHierarchy(mediaId)[1];
+
+            for (MediaMetadataCompat metadata : getMusicsByGenre(null)) {
+                mediaItems.add(createMediaItem(metadata));
             }
 
         } else if (mediaId.startsWith(MEDIA_ID_MUSICS_BY_GENRE)) {
@@ -313,7 +324,7 @@ public class MusicProvider {
     }
 
     private MediaBrowserCompat.MediaItem createBrowsableMediaItemForGenre(String genre,
-                                                                    Resources resources) {
+                                                                          Resources resources) {
         MediaDescriptionCompat description = new MediaDescriptionCompat.Builder()
                 .setMediaId(createMediaID(null, MEDIA_ID_MUSICS_BY_GENRE, genre))
                 .setTitle(genre)

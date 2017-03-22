@@ -100,6 +100,7 @@ public class PlaybackManager implements Playback.Callback {
         LogHelper.d(TAG, "handleStopRequest: mState=" + mPlayback.getState() + " error=", withError);
         mPlayback.stop(true);
         mServiceCallback.onPlaybackStop();
+        mMusicProvider.stopProvider();
         updatePlaybackState(withError);
     }
 
