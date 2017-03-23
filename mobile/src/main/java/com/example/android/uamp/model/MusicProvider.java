@@ -282,6 +282,10 @@ public class MusicProvider {
     public List<MediaBrowserCompat.MediaItem> getChildren(String mediaId, Resources resources) {
         List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
 
+        for (MediaMetadataCompat metadata : getMusicsByGenre(null)) {
+            mediaItems.add(createMediaItem(metadata));
+        }
+/*
         if (!MediaIDHelper.isBrowseable(mediaId)) {
             return mediaItems;
         }
@@ -290,9 +294,9 @@ public class MusicProvider {
             mediaItems.add(createBrowsableMediaItemForRoot(resources));
 
         } else if (MEDIA_ID_MUSICS_BY_GENRE.equals(mediaId)) {
-            /*for (String genre : getGenres()) {
+            *//*for (String genre : getGenres()) {
                 mediaItems.add(createBrowsableMediaItemForGenre(genre, resources));
-            }*/
+            }*//*
             //String genre = MediaIDHelper.getHierarchy(mediaId)[1];
 
             for (MediaMetadataCompat metadata : getMusicsByGenre(null)) {
@@ -307,7 +311,7 @@ public class MusicProvider {
 
         } else {
             LogHelper.w(TAG, "Skipping unmatched mediaId: ", mediaId);
-        }
+        }*/
         return mediaItems;
     }
 
