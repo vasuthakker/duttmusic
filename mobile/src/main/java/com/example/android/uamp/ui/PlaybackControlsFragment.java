@@ -38,6 +38,8 @@ import com.example.android.uamp.AlbumArtCache;
 import com.example.android.uamp.MusicService;
 import com.example.android.uamp.R;
 import com.example.android.uamp.utils.LogHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * A class that shows the Media Queue to the user.
@@ -52,6 +54,7 @@ public class PlaybackControlsFragment extends Fragment {
     private TextView mExtraInfo;
     private ImageView mAlbumArt;
     private String mArtUrl;
+    private AdView mAdView;
     // Receive callbacks from the MediaController. Here we update our state such as which queue
     // is being shown, the current title and description and the PlaybackState.
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
@@ -72,6 +75,7 @@ public class PlaybackControlsFragment extends Fragment {
             PlaybackControlsFragment.this.onMetadataChanged(metadata);
         }
     };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,6 +112,11 @@ public class PlaybackControlsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         LogHelper.d(TAG, "fragment.onStart");
+
+        mAdView = (AdView) getActivity().findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("D830752B3AD17900C65115E56D4C8568").build();
+        mAdView.loadAd(adRequest);
+
         MediaControllerCompat controller = ((FragmentActivity) getActivity())
                 .getSupportMediaController();
         if (controller != null) {

@@ -19,6 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
@@ -178,17 +179,24 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
 
             //noinspection ResourceType
             String source = track.getString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE);
-            if (source != null) {
+            /*if (source != null) {
                 source = source.replaceAll(" ", "%20"); // Escape spaces for URLs
-            }
-
+            }*/
             try {
                 createMediaPlayerIfNeeded();
 
-                mState = PlaybackStateCompat.STATE_BUFFERING;
+                AssetFileDescriptor afd = mContext.getAssets().openFd("data/"+source);
+                mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                afd.close();
+                //  mediaPlayer.start();
+                //duration = mMediaPlayer.getDuration() / 1000;
 
-                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mMediaPlayer.setDataSource(source);
+
+                mState = PlaybackStateCompat.STATE_PLAYING;
+
+                //mState = PlaybackStateCompat.STATE_BUFFERING;
+               /* mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mMediaPlayer.setDataSource(source);*/
 
                 // Starts preparing the media player in the background. When
                 // it's done, it will call our OnPreparedListener (that is,
@@ -447,6 +455,7 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
         LogHelper.d(TAG, "createMediaPlayerIfNeeded. needed? ", (mMediaPlayer==null));
         if (mMediaPlayer == null) {
             mMediaPlayer = new MediaPlayer();
+
 
             // Make sure the media player will acquire a wake-lock while
             // playing. If we don't do that, the CPU might go to sleep while the

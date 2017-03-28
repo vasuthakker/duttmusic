@@ -16,17 +16,11 @@
 
 package com.example.android.uamp.model;
 
-import android.support.annotation.NonNull;
 import android.support.v4.media.MediaMetadataCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.android.uamp.utils.LogHelper;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,9 +56,6 @@ public class RemoteJSONSource implements MusicProviderSource {
     private static final String JSON_TOTAL_TRACK_COUNT = "totalTrackCount";
     private static final String JSON_DURATION = "duration";
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseUser firebaseUser;
 
     public RemoteJSONSource() {
         // Firebase Authentication
@@ -106,7 +97,8 @@ public class RemoteJSONSource implements MusicProviderSource {
         try {
             int slashPos = CATALOG_URL.lastIndexOf('/');
             String path = CATALOG_URL.substring(0, slashPos + 1);
-            JSONObject jsonObj = fetchJSONFromUrl(CATALOG_URL);
+            // JSONObject jsonObj = fetchJSONFromUrl(CATALOG_URL);
+            JSONObject jsonObj = getLocaljsonList();
             ArrayList<MediaMetadataCompat> tracks = new ArrayList<>();
             if (jsonObj != null) {
                 JSONArray jsonTracks = jsonObj.getJSONArray(JSON_MUSIC);
@@ -123,11 +115,39 @@ public class RemoteJSONSource implements MusicProviderSource {
         }
     }
 
+    private JSONObject getLocaljsonList() {
+        JSONObject obj = new JSONObject();
+        try {
+            JSONArray music = new JSONArray();
+            music.put(getJsonObj("DattBavni", "Dattbavni", "Dattbavni", "Dattbavni", "datt.mp3", "https://upload.wikimedia.org/wikipedia/commons/d/d1/Ravi_Varma-Dattatreya.jpg", 1, 1, 443));
+            obj.put(JSON_MUSIC, music);
+        } catch (JSONException e) {
+            Log.e(TAG, "getLocaljsonList: ", e);
+        }
+        return obj;
+    }
+
+    private JSONObject getJsonObj(String title, String album, String artist, String genre, String source, String image, int jNumber, int count, int duration) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(JSON_TITLE, title);
+            obj.put(JSON_ALBUM, album);
+            obj.put(JSON_ARTIST, artist);
+            obj.put(JSON_GENRE, genre);
+            obj.put(JSON_SOURCE, source);
+            obj.put(JSON_IMAGE, image);
+            obj.put(JSON_TRACK_NUMBER, jNumber);
+            obj.put(JSON_TOTAL_TRACK_COUNT, count);
+            obj.put(JSON_DURATION, duration);
+        } catch (JSONException e) {
+            Log.e(TAG, "getLocaljsonList: ", e);
+        }
+        return obj;
+    }
+
     @Override
     public void stopMusic() {
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
+
     }
 
     private MediaMetadataCompat buildFromJSON(JSONObject json, String basePath) throws JSONException {
@@ -144,12 +164,12 @@ public class RemoteJSONSource implements MusicProviderSource {
         LogHelper.d(TAG, "Found music track: ", json);
 
         // Media is stored relative to JSON file
-        if (!source.startsWith("http")) {
+       /* if (!source.startsWith("http")) {
             source = basePath + source;
         }
         if (!iconUrl.startsWith("http")) {
             iconUrl = basePath + iconUrl;
-        }
+        }*/
         // Since we don't have a unique ID in the server, we fake one using the hashcode of
         // the music source. In a real world app, this could come from the server.
         String id = String.valueOf(source.hashCode());

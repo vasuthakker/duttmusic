@@ -178,7 +178,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
     @Override
     public void onDestroy() {
         LogHelper.d(TAG, "onDestroy");
-        unregisterCarConnectionReceiver();
+       // unregisterCarConnectionReceiver();
         // Service is being killed, so make sure we release our resources
         mPlaybackManager.handleStopRequest(null);
         mMediaNotificationManager.stopNotification();

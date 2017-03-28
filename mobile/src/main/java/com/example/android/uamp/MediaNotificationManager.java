@@ -28,6 +28,7 @@ import android.graphics.Color;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -262,7 +263,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
         // If skip to previous action is enabled
         if ((mPlaybackState.getActions() & PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS) != 0) {
             notificationBuilder.addAction(R.drawable.ic_skip_previous_white_24dp,
-                        mService.getString(R.string.label_previous), mPreviousIntent);
+                    mService.getString(R.string.label_previous), mPreviousIntent);
 
             // If there is a "skip to previous" button, the play/pause button will
             // be the second one. We need to keep track of it, because the MediaStyle notification
@@ -276,7 +277,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
         // If skip to next action is enabled
         if ((mPlaybackState.getActions() & PlaybackStateCompat.ACTION_SKIP_TO_NEXT) != 0) {
             notificationBuilder.addAction(R.drawable.ic_skip_next_white_24dp,
-                mService.getString(R.string.label_next), mNextIntent);
+                    mService.getString(R.string.label_next), mNextIntent);
         }
 
         MediaDescriptionCompat description = mMetadata.getDescription();
@@ -293,15 +294,15 @@ public class MediaNotificationManager extends BroadcastReceiver {
                 fetchArtUrl = artUrl;
                 // use a placeholder art while the remote art is being downloaded
                 art = BitmapFactory.decodeResource(mService.getResources(),
-                    R.drawable.ic_default_art);
+                        R.drawable.ic_default_art);
             }
         }
 
         notificationBuilder
                 .setStyle(new NotificationCompat.MediaStyle()
-                    .setShowActionsInCompactView(
-                            new int[]{playPauseButtonPosition})  // show only play/pause in compact view
-                    .setMediaSession(mSessionToken))
+                        .setShowActionsInCompactView(
+                                new int[]{playPauseButtonPosition})  // show only play/pause in compact view
+                        .setMediaSession(mSessionToken))
                 .setColor(mNotificationColor)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -310,7 +311,6 @@ public class MediaNotificationManager extends BroadcastReceiver {
                 .setContentTitle(description.getTitle())
                 .setContentText(description.getSubtitle())
                 .setLargeIcon(art);
-
 
 
         setNotificationPlaybackState(notificationBuilder);
@@ -350,15 +350,15 @@ public class MediaNotificationManager extends BroadcastReceiver {
             LogHelper.d(TAG, "updateNotificationPlaybackState. updating playback position to ",
                     (System.currentTimeMillis() - mPlaybackState.getPosition()) / 1000, " seconds");
             builder
-                .setWhen(System.currentTimeMillis() - mPlaybackState.getPosition())
-                .setShowWhen(true)
-                .setUsesChronometer(true);
+                    .setWhen(System.currentTimeMillis() - mPlaybackState.getPosition())
+                    .setShowWhen(true)
+                    .setUsesChronometer(true);
         } else {
             LogHelper.d(TAG, "updateNotificationPlaybackState. hiding playback position");
             builder
-                .setWhen(0)
-                .setShowWhen(false)
-                .setUsesChronometer(false);
+                    .setWhen(0)
+                    .setShowWhen(false)
+                    .setUsesChronometer(false);
         }
 
         // Make sure that the notification can be dismissed by the user when we are not playing:
@@ -371,7 +371,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
             @Override
             public void onFetched(String artUrl, Bitmap bitmap, Bitmap icon) {
                 if (mMetadata != null && mMetadata.getDescription().getIconUri() != null &&
-                            mMetadata.getDescription().getIconUri().toString().equals(artUrl)) {
+                        mMetadata.getDescription().getIconUri().toString().equals(artUrl)) {
                     // If the media is still the same, update the notification:
                     LogHelper.d(TAG, "fetchBitmapFromURLAsync: set bitmap to ", artUrl);
                     builder.setLargeIcon(bitmap);
