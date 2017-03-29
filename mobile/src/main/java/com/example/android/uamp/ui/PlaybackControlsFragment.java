@@ -114,7 +114,8 @@ public class PlaybackControlsFragment extends Fragment {
         LogHelper.d(TAG, "fragment.onStart");
 
         mAdView = (AdView) getActivity().findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("D830752B3AD17900C65115E56D4C8568").build();
+        //addTestDevice("D830752B3AD17900C65115E56D4C8568")
+        AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
         MediaControllerCompat controller = ((FragmentActivity) getActivity())

@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pageView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -65,7 +66,7 @@ limitations under the License.
             android:id="@+id/line3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/controllers"
+            android:layout_above="@+id/insideadView"
             android:ellipsize="end"
             android:fontFamily="sans-serif-light"
             android:gravity="center_horizontal"
@@ -73,7 +74,17 @@ limitations under the License.
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:shadowColor="@android:color/black"
             android:shadowRadius="20"
+            android:visibility="invisible"
             android:textColor="@color/fullscreen_secondary_line_color" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/insideadView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            android:layout_above="@+id/controllers"
+            android:layout_gravity="center_horizontal"
+            ads:adUnitId="@string/insdie_ad"/>
 
         <LinearLayout
             android:id="@+id/controllers"

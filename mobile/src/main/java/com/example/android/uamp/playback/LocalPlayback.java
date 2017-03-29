@@ -61,7 +61,7 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
     // we don't have focus, but can duck (play at a low volume)
     private static final int AUDIO_NO_FOCUS_CAN_DUCK = 1;
     // we have full audio focus
-    private static final int AUDIO_FOCUSED  = 2;
+    private static final int AUDIO_FOCUSED = 2;
 
     private final Context mContext;
     private final WifiManager.WifiLock mWifiLock;
@@ -179,25 +179,19 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
 
             //noinspection ResourceType
             String source = track.getString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE);
-            /*if (source != null) {
-                source = source.replaceAll(" ", "%20"); // Escape spaces for URLs
-            }*/
             try {
                 createMediaPlayerIfNeeded();
-
-                AssetFileDescriptor afd = mContext.getAssets().openFd("data/"+source);
-                mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                afd.close();
-                //  mediaPlayer.start();
-                //duration = mMediaPlayer.getDuration() / 1000;
-
-
-                mState = PlaybackStateCompat.STATE_PLAYING;
-
-                //mState = PlaybackStateCompat.STATE_BUFFERING;
-               /* mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mMediaPlayer.setDataSource(source);*/
-
+                if (!source.startsWith("http")) {
+                    AssetFileDescriptor afd = mContext.getAssets().openFd("data/" + source);
+                    mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                    afd.close();
+                    mState = PlaybackStateCompat.STATE_PLAYING;
+                } else {
+                    source = source.replaceAll(" ", "%20"); // Escape spaces for URLs
+                    mState = PlaybackStateCompat.STATE_BUFFERING;
+                    mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mMediaPlayer.setDataSource(source);
+                }
                 // Starts preparing the media player in the background. When
                 // it's done, it will call our OnPreparedListener (that is,
                 // the onPrepared() method on this class, since we set the
@@ -333,8 +327,8 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
             // If we were playing when we lost focus, we need to resume playing.
             if (mPlayOnFocusGain) {
                 if (mMediaPlayer != null && !mMediaPlayer.isPlaying()) {
-                    LogHelper.d(TAG,"configMediaPlayerState startMediaPlayer. seeking to ",
-                        mCurrentPosition);
+                    LogHelper.d(TAG, "configMediaPlayerState startMediaPlayer. seeking to ",
+                            mCurrentPosition);
                     if (mCurrentPosition == mMediaPlayer.getCurrentPosition()) {
                         mMediaPlayer.start();
                         mState = PlaybackStateCompat.STATE_PLAYING;
@@ -452,7 +446,7 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
      * already exists.
      */
     private void createMediaPlayerIfNeeded() {
-        LogHelper.d(TAG, "createMediaPlayerIfNeeded. needed? ", (mMediaPlayer==null));
+        LogHelper.d(TAG, "createMediaPlayerIfNeeded. needed? ", (mMediaPlayer == null));
         if (mMediaPlayer == null) {
             mMediaPlayer = new MediaPlayer();
 
@@ -479,7 +473,7 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
      * "foreground service" status, the wake locks and possibly the MediaPlayer.
      *
      * @param releaseMediaPlayer Indicates whether the Media Player should also
-     *            be released or not
+     *                           be released or not
      */
     private void relaxResources(boolean releaseMediaPlayer) {
         LogHelper.d(TAG, "relaxResources. releaseMediaPlayer=", releaseMediaPlayer);

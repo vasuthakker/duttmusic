@@ -32,6 +32,7 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -42,6 +43,10 @@ import com.example.android.uamp.AlbumArtCache;
 import com.example.android.uamp.MusicService;
 import com.example.android.uamp.R;
 import com.example.android.uamp.utils.LogHelper;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -92,6 +97,8 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private ScheduledFuture<?> mScheduleFuture;
     private PlaybackStateCompat mLastPlaybackState;
 
+   private InterstitialAd mInterstitialAd;
+
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
         @Override
         public void onPlaybackStateChanged(@NonNull PlaybackStateCompat state) {
@@ -120,6 +127,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             }
         }
     };
+    private AdView mAdView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,6 +138,31 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("");
         }
+
+        mAdView = (AdView)findViewById(R.id.insideadView);
+        //addTestDevice("D830752B3AD17900C65115E56D4C8568")
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.fullad));
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+               // requestNewInterstitial();
+               // beginPlayingGame();
+                Log.d(TAG, "onAdClosed: ");
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mInterstitialAd.show();
+            }
+        });
+
+        requestNewInterstitial();
 
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         mPauseDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_pause_white_48dp);
@@ -215,6 +248,13 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         mMediaBrowser = new MediaBrowserCompat(this,
             new ComponentName(this, MusicService.class), mConnectionCallback, null);
     }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+
 
     private void connectToSession(MediaSessionCompat.Token token) throws RemoteException {
         MediaControllerCompat mediaController = new MediaControllerCompat(

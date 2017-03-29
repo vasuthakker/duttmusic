@@ -139,13 +139,13 @@ public abstract class ActionBarCastActivity extends AppCompatActivity {
     @Override
     public void setTitle(CharSequence title) {
         super.setTitle(title);
-        mToolbar.setTitle(title);
+       // mToolbar.setTitle(title);
     }
 
     @Override
     public void setTitle(int titleId) {
         super.setTitle(titleId);
-        mToolbar.setTitle(titleId);
+      //  mToolbar.setTitle(titleId);
     }
 
     protected void initializeToolbar() {
