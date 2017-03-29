@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.media.MediaBrowserCompat;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.android.uamp.R;
 import com.example.android.uamp.interfaces.MediaController;
@@ -70,6 +72,26 @@ public class MusicPlayerActivity extends BaseActivity
             outState.putString(SAVED_MEDIA_ID, mediaId);
         }
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_info) {
+            showInfoDialog();
+            return true;
+        } else
+            return super.onOptionsItemSelected(item);
+    }
+
+    private void showInfoDialog() {
+        DialogInfo info=new DialogInfo();
+        info.show(getSupportFragmentManager(),"info");
     }
 
     @Override

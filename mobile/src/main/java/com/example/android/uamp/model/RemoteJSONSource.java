@@ -119,8 +119,9 @@ public class RemoteJSONSource implements MusicProviderSource {
         JSONObject obj = new JSONObject();
         try {
             JSONArray music = new JSONArray();
-            music.put(getJsonObj("Jalaram Aarti", "Jalaram", "Hemant Chauhan", "Bhajan", "aarti.mp3", "https://upload.wikimedia.org/wikipedia/commons/d/d1/Ravi_Varma-Dattatreya.jpg", 1, 1, 443));
-            music.put(getJsonObj("Jalaram Dhun", "Jalaram", "Hemant Chauhan", "Bhajan", "http://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3", "https://upload.wikimedia.org/wikipedia/commons/d/d1/Ravi_Varma-Dattatreya.jpg", 1, 1, 443));
+            music.put(getJsonObj("Jalaram Aarti", "Jalaram", "Hemant Chauhan", "Bhajan", "aarti.mp3", "https://jayjaliyan.files.wordpress.com/2012/02/j11.jpg?w=840", 1, 1, 251));
+            music.put(getJsonObj("Jalaram Stuti", "Jalaram", "Hemant Chauhan", "Bhajan", "stuti.mp3", "https://jayjaliyan.files.wordpress.com/2012/02/j12.jpg", 1, 1, 237));
+            music.put(getJsonObj("Jalaram Dhun", "Jalaram", "Hemant Chauhan", "Bhajan", "dhun.mp3", "http://www.jaijaliyaan.com/images/bapa_small.jpg", 1, 1, 480));
             obj.put(JSON_MUSIC, music);
         } catch (JSONException e) {
             Log.e(TAG, "getLocaljsonList: ", e);

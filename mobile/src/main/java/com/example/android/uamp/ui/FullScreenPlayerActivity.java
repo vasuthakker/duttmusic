@@ -141,7 +141,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
 
         mAdView = (AdView)findViewById(R.id.insideadView);
         //addTestDevice("D830752B3AD17900C65115E56D4C8568")
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("BA98130764070C78198E463F0DA6F552").build();
         mAdView.loadAd(adRequest);
 
         mInterstitialAd = new InterstitialAd(this);
@@ -236,7 +236,8 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 getSupportMediaController().getTransportControls().seekTo(seekBar.getProgress());
-                scheduleSeekbarUpdate();
+              //  scheduleSeekbarUpdate();
+                Log.d(TAG, "onStopTrackingTouch: Progress"+seekBar.getProgress());
             }
         });
 
@@ -250,7 +251,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     }
 
     private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("BA98130764070C78198E463F0DA6F552").build();
 
         mInterstitialAd.loadAd(adRequest);
     }

@@ -35,7 +35,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.uamp.AlbumArtCache;
-import com.example.android.uamp.MusicService;
 import com.example.android.uamp.R;
 import com.example.android.uamp.utils.LogHelper;
 import com.google.android.gms.ads.AdRequest;
@@ -115,7 +114,7 @@ public class PlaybackControlsFragment extends Fragment {
 
         mAdView = (AdView) getActivity().findViewById(R.id.adView);
         //addTestDevice("D830752B3AD17900C65115E56D4C8568")
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("BA98130764070C78198E463F0DA6F552").build();
         mAdView.loadAd(adRequest);
 
         MediaControllerCompat controller = ((FragmentActivity) getActivity())
