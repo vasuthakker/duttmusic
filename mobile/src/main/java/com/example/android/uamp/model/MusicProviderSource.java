@@ -22,6 +22,7 @@ import java.util.Iterator;
 
 public interface MusicProviderSource {
     String CUSTOM_METADATA_TRACK_SOURCE = "__SOURCE__";
+    String CUSTOM_METADATA_TRACK_ONNETWORK = "ON_NETWORK";
     Iterator<MediaMetadataCompat> iterator();
     void stopMusic();
 }

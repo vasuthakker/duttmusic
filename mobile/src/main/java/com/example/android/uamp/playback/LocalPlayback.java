@@ -185,20 +185,19 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
                     mMediaPlayer = null;
                 }*/
                 createMediaPlayerIfNeeded();
-                if (!source.startsWith("http")) {
-                    AssetFileDescriptor afd = mContext.getAssets().openFd("data/" + source);
-                    mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                    afd.close();
-                    mState = PlaybackStateCompat.STATE_PLAYING;
-                    mMediaPlayer.prepare();
-                } else {
-
+                if (source.startsWith("http") || source.startsWith("https")) {
                     source = source.replaceAll(" ", "%20"); // Escape spaces for URLs
                     mState = PlaybackStateCompat.STATE_BUFFERING;
                     mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                     mMediaPlayer.setDataSource(source);
                     mMediaPlayer.prepareAsync();
                     mWifiLock.acquire();
+                } else {
+                    AssetFileDescriptor afd = mContext.getAssets().openFd("data/" + source);
+                    mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                    afd.close();
+                    mState = PlaybackStateCompat.STATE_PLAYING;
+                    mMediaPlayer.prepare();
                 }
                 // Starts preparing the media player in the background. When
                 // it's done, it will call our OnPreparedListener (that is,

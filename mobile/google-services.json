@@ -8,18 +8,62 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:384589011593:android:e3fd3ec3b75c430b",
+        "mobilesdk_app_id": "1:384589011593:android:b99021fdce95d5e5",
         "android_client_info": {
-          "package_name": "com.music.musicappe"
+          "package_name": "com.vk.jalram"
         }
       },
       "oauth_client": [
         {
-          "client_id": "384589011593-fmkgo42098srdf4bavoffr56kir6gkst.apps.googleusercontent.com",
+          "client_id": "384589011593-uge0s4g0hi5thct3v9rc9e8lcoh7oi0k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.music.musicappe",
+            "package_name": "com.vk.jalram",
             "certificate_hash": "72a19106cc23150e6cb06c39d0088fd59fd08883"
+          }
+        },
+        {
+          "client_id": "384589011593-klol1mr02hnhao84gdqu59nf130b1l7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTzx5H4gVhLF6Qt5c9yK1AVDuIWVBs27g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "384589011593-klol1mr02hnhao84gdqu59nf130b1l7q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:384589011593:android:4fd20cf26fca7b9e",
+        "android_client_info": {
+          "package_name": "com.vktechs.sleepingtunes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "384589011593-von8657itq1u6deoo0vdk6rrnufd181u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vktechs.sleepingtunes",
+            "certificate_hash": "e473d58e5b5cd1e493b357176204677fc5259f4c"
           }
         },
         {

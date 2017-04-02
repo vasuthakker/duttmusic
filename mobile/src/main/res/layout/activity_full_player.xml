@@ -60,6 +60,7 @@ limitations under the License.
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:shadowColor="@android:color/black"
             android:shadowRadius="20"
+            android:visibility="gone"
             android:textColor="@color/fullscreen_secondary_line_color" />
 
         <TextView

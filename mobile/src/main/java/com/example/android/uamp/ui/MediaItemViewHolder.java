@@ -47,7 +47,7 @@ public class MediaItemViewHolder {
     private static ColorStateList sColorStatePlaying;
     private static ColorStateList sColorStateNotPlaying;
 
-    ImageView mImageView;
+    ImageView mImageView,imgWifi;
     TextView mTitleView;
     TextView mDescriptionView;
 
@@ -66,6 +66,7 @@ public class MediaItemViewHolder {
             convertView = LayoutInflater.from(activity)
                     .inflate(R.layout.media_list_item, parent, false);
             holder = new MediaItemViewHolder();
+            holder.imgWifi= (ImageView) convertView.findViewById(R.id.song_iswifi);
             holder.mImageView = (ImageView) convertView.findViewById(R.id.play_eq);
             holder.mTitleView = (TextView) convertView.findViewById(R.id.title);
             holder.mDescriptionView = (TextView) convertView.findViewById(R.id.description);
@@ -78,6 +79,7 @@ public class MediaItemViewHolder {
         MediaDescriptionCompat description = item.getDescription();
         holder.mTitleView.setText(description.getTitle());
         holder.mDescriptionView.setText(description.getSubtitle());
+
 
         // If the state of convertView is different, we need to adapt the view to the
         // new state.

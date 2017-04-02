@@ -50,6 +50,7 @@
             android:textColor="?android:attr/textColorPrimary"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/description"
             tools:text="John Doe, his brothers, his sisters, his pets and his more than amazing band"
             android:layout_width="fill_parent"
@@ -58,7 +59,15 @@
             android:ellipsize="end"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="?android:attr/textColorSecondary"/>
-
+        <ImageView
+            android:id="@+id/song_iswifi"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+           android:layout_gravity="right"
+            android:layout_marginEnd="@dimen/media_item_icon_margin_start"
+            android:contentDescription="@string/wifi"
+            android:src="@drawable/ic_wifi"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </RelativeLayout>
