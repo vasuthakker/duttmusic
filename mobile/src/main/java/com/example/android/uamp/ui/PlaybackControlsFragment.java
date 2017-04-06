@@ -40,6 +40,8 @@ import com.example.android.uamp.utils.LogHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+
 /**
  * A class that shows the Media Queue to the user.
  */
@@ -114,8 +116,10 @@ public class PlaybackControlsFragment extends Fragment {
 
         mAdView = (AdView) getActivity().findViewById(R.id.adView);
         //addTestDevice("D830752B3AD17900C65115E56D4C8568")
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("BA98130764070C78198E463F0DA6F552").build();
-        mAdView.loadAd(adRequest);
+        if(mAdView!=null && mAdView.getVisibility()==View.VISIBLE) {
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
 
         MediaControllerCompat controller = ((FragmentActivity) getActivity())
                 .getSupportMediaController();

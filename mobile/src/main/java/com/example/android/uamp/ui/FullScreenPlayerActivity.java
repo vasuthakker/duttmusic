@@ -92,12 +92,12 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     };
 
     private final ScheduledExecutorService mExecutorService =
-        Executors.newSingleThreadScheduledExecutor();
+            Executors.newSingleThreadScheduledExecutor();
 
     private ScheduledFuture<?> mScheduleFuture;
     private PlaybackStateCompat mLastPlaybackState;
 
-   private InterstitialAd mInterstitialAd;
+    private InterstitialAd mInterstitialAd;
 
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
         @Override
@@ -117,16 +117,16 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
 
     private final MediaBrowserCompat.ConnectionCallback mConnectionCallback =
             new MediaBrowserCompat.ConnectionCallback() {
-        @Override
-        public void onConnected() {
-            LogHelper.d(TAG, "onConnected");
-            try {
-                connectToSession(mMediaBrowser.getSessionToken());
-            } catch (RemoteException e) {
-                LogHelper.e(TAG, e, "could not connect media controller");
-            }
-        }
-    };
+                @Override
+                public void onConnected() {
+                    LogHelper.d(TAG, "onConnected");
+                    try {
+                        connectToSession(mMediaBrowser.getSessionToken());
+                    } catch (RemoteException e) {
+                        LogHelper.e(TAG, e, "could not connect media controller");
+                    }
+                }
+            };
     private AdView mAdView;
 
     @Override
@@ -139,30 +139,29 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             getSupportActionBar().setTitle("");
         }
 
-        mAdView = (AdView)findViewById(R.id.insideadView);
-        //addTestDevice("D830752B3AD17900C65115E56D4C8568")
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("BA98130764070C78198E463F0DA6F552").build();
-        mAdView.loadAd(adRequest);
+        mAdView = (AdView) findViewById(R.id.insideadView);
+        if(mAdView!=null && mAdView.getVisibility()==View.VISIBLE) {
+            //addTestDevice("D830752B3AD17900C65115E56D4C8568")
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId(getString(R.string.fullad));
+            mInterstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    // requestNewInterstitial();
+                    // beginPlayingGame();
+                    Log.d(TAG, "onAdClosed: ");
+                }
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getString(R.string.fullad));
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-               // requestNewInterstitial();
-               // beginPlayingGame();
-                Log.d(TAG, "onAdClosed: ");
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                mInterstitialAd.show();
-            }
-        });
-
-        requestNewInterstitial();
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                    mInterstitialAd.show();
+                }
+            });
+            requestNewInterstitial();
+        }
 
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         mPauseDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_pause_white_48dp);
@@ -183,7 +182,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             @Override
             public void onClick(View v) {
                 MediaControllerCompat.TransportControls controls =
-                    getSupportMediaController().getTransportControls();
+                        getSupportMediaController().getTransportControls();
                 controls.skipToNext();
             }
         });
@@ -192,7 +191,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             @Override
             public void onClick(View v) {
                 MediaControllerCompat.TransportControls controls =
-                    getSupportMediaController().getTransportControls();
+                        getSupportMediaController().getTransportControls();
                 controls.skipToPrevious();
             }
         });
@@ -236,8 +235,8 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 getSupportMediaController().getTransportControls().seekTo(seekBar.getProgress());
-              //  scheduleSeekbarUpdate();
-                Log.d(TAG, "onStopTrackingTouch: Progress"+seekBar.getProgress());
+                //  scheduleSeekbarUpdate();
+                Log.d(TAG, "onStopTrackingTouch: Progress" + seekBar.getProgress());
             }
         });
 
@@ -247,12 +246,11 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         }
 
         mMediaBrowser = new MediaBrowserCompat(this,
-            new ComponentName(this, MusicService.class), mConnectionCallback, null);
+                new ComponentName(this, MusicService.class), mConnectionCallback, null);
     }
 
     private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("BA98130764070C78198E463F0DA6F552").build();
-
+        AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
     }
 
@@ -283,7 +281,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private void updateFromParams(Intent intent) {
         if (intent != null) {
             MediaDescriptionCompat description = intent.getParcelableExtra(
-                MusicPlayerActivity.EXTRA_CURRENT_MEDIA_DESCRIPTION);
+                    MusicPlayerActivity.EXTRA_CURRENT_MEDIA_DESCRIPTION);
             if (description != null) {
                 updateMediaDescription(description);
             }
@@ -382,7 +380,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         LogHelper.d(TAG, "updateDuration called ");
         int duration = (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
         mSeekbar.setMax(duration);
-        mEnd.setText(DateUtils.formatElapsedTime(duration/1000));
+        mEnd.setText(DateUtils.formatElapsedTime(duration / 1000));
     }
 
     private void updatePlaybackState(PlaybackStateCompat state) {
@@ -424,10 +422,10 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                 LogHelper.d(TAG, "Unhandled state ", state.getState());
         }
 
-        mSkipNext.setVisibility((state.getActions() & PlaybackStateCompat.ACTION_SKIP_TO_NEXT) == 0
-            ? INVISIBLE : VISIBLE );
+      /*  mSkipNext.setVisibility((state.getActions() & PlaybackStateCompat.ACTION_SKIP_TO_NEXT) == 0
+                ? INVISIBLE : VISIBLE);
         mSkipPrev.setVisibility((state.getActions() & PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS) == 0
-            ? INVISIBLE : VISIBLE );
+                ? INVISIBLE : VISIBLE);*/
     }
 
     private void updateProgress() {

@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface DataProvider {
-    List<SongEntity> getSongs(int type);
+    List<SongEntity> getSongs();
 }

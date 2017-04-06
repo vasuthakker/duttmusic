@@ -19,8 +19,6 @@ package com.example.android.uamp.model;
 import android.support.v4.media.MediaMetadataCompat;
 
 import com.example.android.uamp.interfaces.DataProvider;
-import com.example.android.uamp.provider.SongProvider;
-import com.example.android.uamp.provider.TypeConstnts;
 import com.example.android.uamp.utils.LogHelper;
 
 import org.json.JSONException;
@@ -34,6 +32,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import uamp.provider.SongProvider;
 
 /**
  * Utility class to get a list of MusicTrack's based on a server-side JSON
@@ -99,7 +99,7 @@ public class RemoteJSONSource implements MusicProviderSource {
         String path = CATALOG_URL.substring(0, slashPos + 1);
         // JSONObject jsonObj = fetchJSONFromUrl(CATALOG_URL);
         DataProvider provider = new SongProvider();
-        List<SongEntity> songs = provider.getSongs(TypeConstnts.SLEEPING_TUNES);
+        List<SongEntity> songs = provider.getSongs();
         ArrayList<MediaMetadataCompat> tracks = new ArrayList<>();
         for (SongEntity song : songs) {
             tracks.add(buildFromJSON(song));
