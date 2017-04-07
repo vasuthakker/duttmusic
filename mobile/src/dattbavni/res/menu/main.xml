@@ -14,11 +14,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
-    <gradient
-        android:angle="90"
-        android:centerColor="@android:color/transparent"
-        android:endColor="@android:color/transparent"
-        android:startColor="@android:color/black"
-        android:type="linear" />
-</shape>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_info"
+        android:title="@string/media_route_menu_title"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_info"
+        android:visible="false"/>
+</menu>

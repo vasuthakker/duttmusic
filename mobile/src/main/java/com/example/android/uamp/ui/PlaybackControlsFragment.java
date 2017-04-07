@@ -192,6 +192,8 @@ public class PlaybackControlsFragment extends Fragment {
                 );
             }
         }
+        else
+            mAlbumArt.setImageResource(R.drawable.app_icon);
     }
 
     public void setExtraInfo(String extraInfo) {

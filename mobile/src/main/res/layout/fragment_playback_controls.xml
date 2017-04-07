@@ -29,7 +29,7 @@
             android:contentDescription="@string/currently_playing_song"
             android:padding="5dp"
             android:scaleType="centerCrop"
-            tools:src="@drawable/ic_launcher" />
+            tools:src="@drawable/app_icon" />
 
         <ImageButton
             android:id="@+id/play_pause"

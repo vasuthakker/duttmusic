@@ -309,8 +309,8 @@ public class MediaNotificationManager extends BroadcastReceiver {
                 .setUsesChronometer(true)
                 .setContentIntent(createContentIntent(description))
                 .setContentTitle(description.getTitle())
-                .setContentText(description.getSubtitle())
-                .setLargeIcon(art);
+                .setContentText(description.getSubtitle());
+                //.setLargeIcon(art);
 
 
         setNotificationPlaybackState(notificationBuilder);

@@ -46,7 +46,9 @@ dependencies {
     compile 'com.android.support:mediarouter-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
     compile 'com.google.firebase:firebase-ads:10.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
+
 
 
 
