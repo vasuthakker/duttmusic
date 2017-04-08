@@ -35,6 +35,11 @@ android {
             versionCode 1
             versionName "1"
         }
+        jalaram {
+            applicationId 'com.vk.jalram'
+            versionCode 3
+            versionName "1.2"
+        }
     }
 }
 
