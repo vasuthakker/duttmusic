@@ -28,7 +28,6 @@ import android.graphics.Color;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -309,8 +308,8 @@ public class MediaNotificationManager extends BroadcastReceiver {
                 .setUsesChronometer(true)
                 .setContentIntent(createContentIntent(description))
                 .setContentTitle(description.getTitle())
-                .setContentText(description.getSubtitle());
-                //.setLargeIcon(art);
+                .setContentText(description.getSubtitle())
+                .setLargeIcon(art);
 
 
         setNotificationPlaybackState(notificationBuilder);

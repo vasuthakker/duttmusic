@@ -341,7 +341,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         String artUrl = description.getIconUri().toString();
         mCurrentArtUrl = artUrl;
         AlbumArtCache cache = AlbumArtCache.getInstance();
-       /* Bitmap art = cache.getBigImage(artUrl);
+        Bitmap art = cache.getBigImage(artUrl);
         if (art == null) {
             art = description.getIconBitmap();
         }
@@ -360,7 +360,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                     }
                 }
             });
-        }*/
+        }
     }
 
     private void updateMediaDescription(MediaDescriptionCompat description) {

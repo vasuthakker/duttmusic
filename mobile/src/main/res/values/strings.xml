@@ -36,12 +36,14 @@
     <string name="no_search_results">No search results.</string>
     <string name="loading">Loading…</string>
     <string name="media_route_menu_title">Play on…</string>
-    <string name="banner_ad_unit_id">ca-app-pub-4869448739125810/4995886685</string>
-    <string name="insdie_ad">ca-app-pub-4869448739125810/6472619886</string>
-    <string name="fullad">ca-app-pub-4869448739125810/7949353085</string>
+
     <string name="select_from_below">Select From Below</string>
     <string name="created_by">Created By: Viral Thakker</string>
     <string name="jalaram_bapa">Jalaram Bapa</string>
     <string name="jalaram_info">Jalaram Bapa (Gujarati: જલારામ બાપા) popularly known as Bapa (Gujarati: બાપા) (14 November 1799 – 23 February 1881) was a Hindu saint from Gujarat, India. He was born on 14 November 1799,one week after the Hindu festival of Diwali.</string>
     <string name="wifi">available on wifi</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-4869448739125810/4995886685</string>
+    <string name="insdie_ad">ca-app-pub-4869448739125810/6472619886</string>
+    <string name="fullad">ca-app-pub-4869448739125810/7949353085</string>
 </resources>

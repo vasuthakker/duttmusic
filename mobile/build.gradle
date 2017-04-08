@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
     defaultConfig {
-        applicationId "com.vktechs.sleepingtunes"
+        applicationId "com.vk.jalram"
         minSdkVersion 20
         targetSdkVersion 23
         versionCode 2
@@ -29,6 +29,11 @@ android {
             applicationId 'com.rohan.dattbavni'
         }
         songapp {
+        }
+        sleeping {
+            applicationId 'com.vktechs.sleepingtunes'
+            versionCode 1
+            versionName "1"
         }
     }
 }
