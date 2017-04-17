@@ -63,6 +63,7 @@ public class MusicPlayerActivity extends BaseActivity
         if (savedInstanceState == null) {
             startFullScreenActivityIfNeeded(getIntent());
         }
+
     }
 
     @Override
@@ -90,8 +91,8 @@ public class MusicPlayerActivity extends BaseActivity
     }
 
     private void showInfoDialog() {
-        DialogInfo info=new DialogInfo();
-        info.show(getSupportFragmentManager(),"info");
+        DialogInfo info = new DialogInfo();
+        info.show(getSupportFragmentManager(), "info");
     }
 
     @Override

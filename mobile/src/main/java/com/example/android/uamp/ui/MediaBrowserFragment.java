@@ -123,6 +123,23 @@ public class MediaBrowserFragment extends Fragment {
                         mBrowserAdapter.add(item);
                     }
                     mBrowserAdapter.notifyDataSetChanged();
+
+                    // TODO: 14-04-2017  Remove code
+                    MediaControllerCompat controller = ((FragmentActivity) getActivity())
+                            .getSupportMediaController();
+                    MediaMetadataCompat metadata = controller.getMetadata();
+                    if(metadata==null) {
+                        MediaBrowserCompat.MediaItem item = mBrowserAdapter.getItem(0);
+                        mMediaController.onMediaItemSelected(item);
+                    }
+                    Intent intent = new Intent(getActivity(), FullScreenPlayerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    if (metadata != null) {
+                        intent.putExtra(MusicPlayerActivity.EXTRA_CURRENT_MEDIA_DESCRIPTION,
+                                metadata.getDescription());
+                    }
+                    startActivity(intent);
+                    getActivity().finish();
                 } catch (Throwable t) {
                     LogHelper.e(TAG, "Error on childrenloaded", t);
                 }

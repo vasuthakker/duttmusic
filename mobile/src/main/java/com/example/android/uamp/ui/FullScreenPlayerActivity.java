@@ -15,8 +15,11 @@
  */
 package com.example.android.uamp.ui;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -79,7 +82,8 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private Drawable mPauseDrawable;
     private Drawable mPlayDrawable;
     private ImageView mBackgroundImage;
-
+    private AdView mAdView;
+    private BroadcastReceiver stopReceiver;
     private String mCurrentArtUrl;
     private final Handler mHandler = new Handler();
     private MediaBrowserCompat mMediaBrowser;
@@ -127,7 +131,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                     }
                 }
             };
-    private AdView mAdView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -254,6 +258,43 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         mInterstitialAd.loadAd(adRequest);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter iFilter=new IntentFilter("com.dutt");
+        stopReceiver=new BroadcastReceiver()
+        {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mPlayPause.setImageDrawable(mPlayDrawable);
+                mSeekbar.setProgress(0);
+                stopSeekbarUpdate();
+                getSupportMediaController().getTransportControls().seekTo(0);
+                getSupportMediaController().getTransportControls().stop();
+            }
+        };
+
+        registerReceiver(stopReceiver,iFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        try {
+            unregisterReceiver(stopReceiver);
+        }
+        catch (IllegalStateException e)
+        {
+            Log.e(TAG, "onPause: ", e);
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 
     private void connectToSession(MediaSessionCompat.Token token) throws RemoteException {
         MediaControllerCompat mediaController = new MediaControllerCompat(
@@ -379,7 +420,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         }
         LogHelper.d(TAG, "updateDuration called ");
         int duration = (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
-        mSeekbar.setMax(duration);
+            mSeekbar.setMax(duration);
         mEnd.setText(DateUtils.formatElapsedTime(duration / 1000));
     }
 
@@ -396,7 +437,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                 mPlayPause.setVisibility(VISIBLE);
                 mPlayPause.setImageDrawable(mPauseDrawable);
                 mControllers.setVisibility(VISIBLE);
-                scheduleSeekbarUpdate();
+                 scheduleSeekbarUpdate();
                 break;
             case PlaybackStateCompat.STATE_PAUSED:
                 mControllers.setVisibility(VISIBLE);
@@ -411,6 +452,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                 mPlayPause.setVisibility(VISIBLE);
                 mPlayPause.setImageDrawable(mPlayDrawable);
                 stopSeekbarUpdate();
+
                 break;
             case PlaybackStateCompat.STATE_BUFFERING:
                 mPlayPause.setVisibility(INVISIBLE);
@@ -442,6 +484,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                     mLastPlaybackState.getLastPositionUpdateTime();
             currentPosition += (int) timeDelta * mLastPlaybackState.getPlaybackSpeed();
         }
+        Log.v(TAG, "Curerent Pos: "+currentPosition);
         mSeekbar.setProgress((int) currentPosition);
     }
 }

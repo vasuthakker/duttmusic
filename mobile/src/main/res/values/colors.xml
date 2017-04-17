@@ -33,7 +33,7 @@
     <color name="default_background">#0096a6</color>
 
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#8e2f10</color>
     <color name="colorPrimaryLight">#C5CAE9</color>
     <color name="colorAccent">#009688</color>
     <color name="colorText">@android:color/white</color>

@@ -171,48 +171,53 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
 
         if (mState == PlaybackStateCompat.STATE_PAUSED && !mediaHasChanged && mMediaPlayer != null) {
             configMediaPlayerState();
-        } else {
+        }
+        else {
             mState = PlaybackStateCompat.STATE_STOPPED;
             relaxResources(false); // release everything except MediaPlayer
             MediaMetadataCompat track = mMusicProvider.getMusic(
                     MediaIDHelper.extractMusicIDFromMediaID(item.getDescription().getMediaId()));
-
             //noinspection ResourceType
             String source = track.getString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE);
             try {
-               /* if (mMediaPlayer != null) {
+                if (mMediaPlayer != null && mMediaPlayer.getCurrentPosition()>400*1000) {
                     mMediaPlayer.reset();
                     mMediaPlayer = null;
-                }*/
-                createMediaPlayerIfNeeded();
-                if (source.startsWith("http") || source.startsWith("https")) {
-                    source = source.replaceAll(" ", "%20"); // Escape spaces for URLs
-                    mState = PlaybackStateCompat.STATE_BUFFERING;
-                    mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    mMediaPlayer.setDataSource(source);
-                    mMediaPlayer.prepareAsync();
-                    mWifiLock.acquire();
-                } else {
-                    AssetFileDescriptor afd = mContext.getAssets().openFd("data/" + source);
-                    mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                    afd.close();
-                    mState = PlaybackStateCompat.STATE_PLAYING;
-                    mMediaPlayer.prepare();
+                    Intent intent=new Intent("com.dutt");
+                    intent.putExtra("stopped",true);
+                    mContext.sendBroadcast(intent);
                 }
-                // Starts preparing the media player in the background. When
-                // it's done, it will call our OnPreparedListener (that is,
-                // the onPrepared() method on this class, since we set the
-                // listener to 'this'). Until the media player is prepared,
-                // we *cannot* call start() on it!
-                //mMediaPlayer.prepareAsync();
+                else {
+                    createMediaPlayerIfNeeded();
+                    if (source.startsWith("http") || source.startsWith("https")) {
+                        source = source.replaceAll(" ", "%20"); // Escape spaces for URLs
+                        mState = PlaybackStateCompat.STATE_BUFFERING;
+                        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mMediaPlayer.setDataSource(source);
+                        mMediaPlayer.prepareAsync();
+                        mWifiLock.acquire();
+                    } else {
+                        AssetFileDescriptor afd = mContext.getAssets().openFd("data/" + source);
+                        mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                        afd.close();
+                        mState = PlaybackStateCompat.STATE_PLAYING;
+                        mMediaPlayer.prepare();
+                    }
+                    // Starts preparing the media player in the background. When
+                    // it's done, it will call our OnPreparedListener (that is,
+                    // the onPrepared() method on this class, since we set the
+                    // listener to 'this'). Until the media player is prepared,
+                    // we *cannot* call start() on it!
+                    //mMediaPlayer.prepareAsync();
 
-                // If we are streaming from the internet, we want to hold a
-                // Wifi lock, which prevents the Wifi radio from going to
-                // sleep while the song is playing.
-                //mWifiLock.acquire();
+                    // If we are streaming from the internet, we want to hold a
+                    // Wifi lock, which prevents the Wifi radio from going to
+                    // sleep while the song is playing.
+                    //mWifiLock.acquire();
 
-                if (mCallback != null) {
-                    mCallback.onPlaybackStatusChanged(mState);
+                    if (mCallback != null) {
+                        mCallback.onPlaybackStatusChanged(mState);
+                    }
                 }
 
             } catch (IOException ex) {
