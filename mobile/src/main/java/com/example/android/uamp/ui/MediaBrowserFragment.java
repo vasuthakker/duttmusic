@@ -124,7 +124,7 @@ public class MediaBrowserFragment extends Fragment {
                     }
                     mBrowserAdapter.notifyDataSetChanged();
 
-                    // TODO: 14-04-2017  Remove code
+                   /* // TODO: 14-04-2017  Remove code
                     MediaControllerCompat controller = ((FragmentActivity) getActivity())
                             .getSupportMediaController();
                     MediaMetadataCompat metadata = controller.getMetadata();
@@ -139,7 +139,7 @@ public class MediaBrowserFragment extends Fragment {
                                 metadata.getDescription());
                     }
                     startActivity(intent);
-                    getActivity().finish();
+                    getActivity().finish();*/
                 } catch (Throwable t) {
                     LogHelper.e(TAG, "Error on childrenloaded", t);
                 }

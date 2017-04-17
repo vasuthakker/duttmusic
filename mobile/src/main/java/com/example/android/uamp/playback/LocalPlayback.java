@@ -180,14 +180,14 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
             //noinspection ResourceType
             String source = track.getString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE);
             try {
-                if (mMediaPlayer != null && mMediaPlayer.getCurrentPosition()>400*1000) {
+              /*  if (mMediaPlayer != null && mMediaPlayer.getCurrentPosition()>400*1000) {
                     mMediaPlayer.reset();
                     mMediaPlayer = null;
                     Intent intent=new Intent("com.dutt");
                     intent.putExtra("stopped",true);
                     mContext.sendBroadcast(intent);
                 }
-                else {
+                else {*/
                     createMediaPlayerIfNeeded();
                     if (source.startsWith("http") || source.startsWith("https")) {
                         source = source.replaceAll(" ", "%20"); // Escape spaces for URLs
@@ -218,7 +218,7 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
                     if (mCallback != null) {
                         mCallback.onPlaybackStatusChanged(mState);
                     }
-                }
+                //}
 
             } catch (IOException ex) {
                 LogHelper.e(TAG, ex, "Exception playing song");
