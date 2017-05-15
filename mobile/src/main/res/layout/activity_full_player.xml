@@ -14,8 +14,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pageView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,169 +24,253 @@ limitations under the License.
 
     <ImageView
         android:id="@+id/background_image"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:contentDescription="@string/background_image_str" />
+        android:visibility="gone"
+        android:contentDescription="@string/background_image_str"
+        ads:layout_constraintRight_toLeftOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        ads:layout_constraintBottom_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/fullscreen_bg_gradient" >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        ads:layout_constraintLeft_toLeftOf="@+id/relativeLayout"
+        ads:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"
+        ads:layout_constraintHorizontal_bias="0.0"
+        tools:layout_constraintRight_creator="1"
+        ads:titleTextColor="@android:color/white"
+        ads:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp" />
 
-        <TextView
-            android:id="@+id/line1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/line2"
-            android:ellipsize="end"
-            android:gravity="center_horizontal"
-            android:maxLines="1"
-            android:shadowColor="@android:color/black"
-            android:shadowRadius="20"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/fullscreen_line_color" />
+    <TextView
+        android:id="@+id/line2"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:shadowColor="@android:color/black"
+        android:shadowRadius="20"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/fullscreen_secondary_line_color"
+        android:visibility="gone"
+        ads:layout_constraintBottom_toTopOf="@+id/line3"
+        ads:layout_constraintLeft_toLeftOf="@+id/line3"
+        ads:layout_constraintRight_toLeftOf="@+id/line3"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
 
-        <TextView
-            android:id="@+id/line2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/line3"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center_horizontal"
-            android:maxLines="1"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:shadowColor="@android:color/black"
-            android:shadowRadius="20"
-            android:visibility="gone"
-            android:textColor="@color/fullscreen_secondary_line_color" />
+    <TextView
+        android:id="@+id/line3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:shadowColor="@android:color/black"
+        android:shadowRadius="20"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/fullscreen_secondary_line_color"
+        android:visibility="invisible"
+        ads:layout_constraintBottom_toTopOf="@+id/insideadView"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
 
-        <TextView
-            android:id="@+id/line3"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/insideadView"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center_horizontal"
-            android:maxLines="1"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:shadowColor="@android:color/black"
-            android:shadowRadius="20"
-            android:visibility="invisible"
-            android:textColor="@color/fullscreen_secondary_line_color" />
+    <View
+        android:id="@+id/relativeLayout"
+        android:layout_width="0dp"
+        android:layout_height="185dp"
+        android:background="@color/colorPrimary"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1">
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/insideadView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            android:layout_above="@+id/controllers"
-            android:layout_gravity="center_horizontal"
-            ads:adUnitId="@string/insdie_ad"/>
-
-        <LinearLayout
-            android:id="@+id/controllers"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:visibility="invisible">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp">
-
-                <TextView
-                    android:id="@+id/startText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginStart="@dimen/text_view_margin"
-                    android:layout_alignParentStart="true"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:textColor="@android:color/white" />
-
-                <SeekBar
-                    android:id="@+id/seekBar1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_toStartOf="@+id/endText"
-                    android:layout_toEndOf="@+id/startText" />
-
-                <TextView
-                    android:id="@+id/endText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginEnd="@dimen/end_text_margin"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="center_vertical"
-                    android:layout_alignWithParentIfMissing="true"
-                    android:maxLines="1"
-                    android:textColor="@android:color/white" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp">
-
-                <ImageView
-                    android:id="@+id/prev"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_skip_previous_white_48dp"
-                    android:contentDescription="@string/skip_prev"/>
-
-                <ImageView
-                    android:id="@+id/play_pause"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:src="@drawable/uamp_ic_play_arrow_white_48dp"
-                    android:contentDescription="@string/play_pause"/>
-
-                <ImageView
-                    android:id="@+id/next"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_skip_next_white_48dp"
-                    android:contentDescription="@string/skip_next"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
+    </View>
 
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        ads:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/fullscreen_toolbar_bg_gradient"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <TextView
+        android:id="@+id/full_txtlyrics"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:shadowDy="2"
+        android:shadowDx="2"
+        android:shadowRadius="1"
+        android:shadowColor="@android:color/black"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:scrollbars="vertical"
+        ads:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/toolbar"
+        ads:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
-</RelativeLayout>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/insideadView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/insdie_ad"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginBottom="5dp"
+        ads:layout_constraintBottom_toTopOf="@+id/line1" />
+
+    <LinearLayout
+        android:id="@+id/controllers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="visible"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <TextView
+                android:id="@+id/startText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/text_view_margin"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textColor="@android:color/white" />
+
+            <SeekBar
+                android:id="@+id/seekBar1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toEndOf="@+id/startText"
+                android:layout_toStartOf="@+id/endText" />
+
+            <TextView
+                android:id="@+id/endText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/end_text_margin"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textColor="@android:color/white" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:id="@+id/prev"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/skip_prev"
+                android:src="@drawable/ic_skip_previous_white_48dp" />
+
+            <ImageView
+                android:id="@+id/play_pause"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/play_pause"
+                android:src="@drawable/uamp_ic_play_arrow_white_48dp" />
+
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/skip_next"
+                android:src="@drawable/ic_skip_next_white_48dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/line1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:shadowColor="@android:color/black"
+        android:shadowRadius="20"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/fullscreen_line_color"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginBottom="8dp"
+        ads:layout_constraintBottom_toTopOf="@+id/controllers" />
+
+</android.support.constraint.ConstraintLayout>

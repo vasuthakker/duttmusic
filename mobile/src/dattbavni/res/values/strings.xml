@@ -3,4 +3,10 @@
 
     <string name="app_name">Dutt Bavani</string>
 
+    <string name="desgined_by">Design and Created by</string>
+    <string name="creator">Hari Cassets</string>
+    <string name="lets_share">Let\'s Share</string>
+
+    <string name="insdie_ad">ca-app-pub-4990243882809131/6090487208</string>
+    <string name="fullad">ca-app-pub-4869448739125810/3398389083</string>
 </resources>

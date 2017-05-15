@@ -348,7 +348,6 @@ public class MusicProvider {
                 metadata.getDescription().getMediaId(), MEDIA_ID_MUSICS_BY_GENRE, genre);
         MediaMetadataCompat copy = new MediaMetadataCompat.Builder(metadata)
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, hierarchyAwareMediaID)
-
                 .build();
 
         return new MediaBrowserCompat.MediaItem(copy.getDescription(),

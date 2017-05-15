@@ -46,4 +46,13 @@
     <string name="banner_ad_unit_id">ca-app-pub-4869448739125810/4995886685</string>
     <string name="insdie_ad">ca-app-pub-4869448739125810/6472619886</string>
     <string name="fullad">ca-app-pub-4869448739125810/7949353085</string>
+    <string name="desgined_by">Design and Created by</string>
+    <string name="creator">VK Techs</string>
+    <string name="lets_share">Let\'s Share</string>
+
+    <string name="share_message">Share this application to your family and friends</string>
+    <string name="more_apps">More Apps</string>
+    <string name="ratings">Ratings</string>
+    <string name="parichay">About</string>
+    <string name="play_songs">Play Songs</string>
 </resources>

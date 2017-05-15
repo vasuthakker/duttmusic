@@ -84,16 +84,12 @@ public class MusicPlayerActivity extends BaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_info) {
-            showInfoDialog();
+        //    showInfoDialog();
             return true;
         } else
             return super.onOptionsItemSelected(item);
     }
 
-    private void showInfoDialog() {
-        DialogInfo info = new DialogInfo();
-        info.show(getSupportFragmentManager(), "info");
-    }
 
     @Override
     public void onMediaItemSelected(MediaBrowserCompat.MediaItem item) {

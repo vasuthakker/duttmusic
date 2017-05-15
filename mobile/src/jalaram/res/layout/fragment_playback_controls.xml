@@ -6,22 +6,22 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-
+    android:background="@android:color/transparent"
     android:padding="@dimen/playback_controls_padding">
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ads:adSize="BANNER"
         android:layout_gravity="center_horizontal"
-        ads:adUnitId="@string/banner_ad_unit_id"
-        />
+        android:layout_marginBottom="5dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="@android:color/white">
 
         <ImageView
             android:id="@+id/album_art"

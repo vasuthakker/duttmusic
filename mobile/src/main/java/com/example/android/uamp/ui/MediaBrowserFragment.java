@@ -124,8 +124,8 @@ public class MediaBrowserFragment extends Fragment {
                     }
                     mBrowserAdapter.notifyDataSetChanged();
 
-                   /* // TODO: 14-04-2017  Remove code
-                    MediaControllerCompat controller = ((FragmentActivity) getActivity())
+                    // TODO: 14-04-2017  Remove code
+                 /*   MediaControllerCompat controller = ((FragmentActivity) getActivity())
                             .getSupportMediaController();
                     MediaMetadataCompat metadata = controller.getMetadata();
                     if(metadata==null) {

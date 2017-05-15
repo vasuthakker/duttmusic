@@ -305,11 +305,12 @@ public class MediaNotificationManager extends BroadcastReceiver {
                 .setColor(mNotificationColor)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setUsesChronometer(true)
+                .setUsesChronometer(false)
                 .setContentIntent(createContentIntent(description))
                 .setContentTitle(description.getTitle())
                 .setContentText(description.getSubtitle())
                 .setLargeIcon(art);
+        //.setLargeIcon(BitmapFactory.decodeResource(mService.getResources(),R.drawable.ic_hari));
 
 
         setNotificationPlaybackState(notificationBuilder);

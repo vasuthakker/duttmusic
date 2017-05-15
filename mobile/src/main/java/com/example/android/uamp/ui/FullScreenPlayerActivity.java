@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -35,7 +36,10 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.format.DateUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -58,6 +62,7 @@ import java.util.concurrent.TimeUnit;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static com.example.android.uamp.R.id.textView;
 
 /**
  * A full screen player that shows the current playing music with a background image
@@ -77,6 +82,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private TextView mLine1;
     private TextView mLine2;
     private TextView mLine3;
+    private TextView txtLyrics;
     private ProgressBar mLoading;
     private View mControllers;
     private Drawable mPauseDrawable;
@@ -140,11 +146,11 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         initializeToolbar();
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("");
+
         }
 
         mAdView = (AdView) findViewById(R.id.insideadView);
-        if(mAdView!=null && mAdView.getVisibility()==View.VISIBLE) {
+        if (mAdView != null && mAdView.getVisibility() == View.VISIBLE) {
             //addTestDevice("D830752B3AD17900C65115E56D4C8568")
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
@@ -180,6 +186,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         mLine2 = (TextView) findViewById(R.id.line2);
         mLine3 = (TextView) findViewById(R.id.line3);
         mLoading = (ProgressBar) findViewById(R.id.progressBar1);
+        txtLyrics= (TextView) findViewById(R.id.full_txtlyrics);
         mControllers = findViewById(R.id.controllers);
 
         mSkipNext.setOnClickListener(new View.OnClickListener() {
@@ -251,6 +258,22 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
 
         mMediaBrowser = new MediaBrowserCompat(this,
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
+
+        txtLyrics.setMovementMethod(new ScrollingMovementMethod());
+
+
+
+        // TODO: 15-05-2017 Remove Code
+       /* TextView hariCassets = (TextView) findViewById(R.id.hari_cassets);
+        if (hariCassets != null) {
+            hariCassets.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.haricassettes.com/"));
+                    startActivity(browserIntent);
+                }
+            });
+        }*/
     }
 
     private void requestNewInterstitial() {
@@ -262,9 +285,8 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     public void onResume() {
         super.onResume();
 
-        IntentFilter iFilter=new IntentFilter("com.dutt");
-        stopReceiver=new BroadcastReceiver()
-        {
+        IntentFilter iFilter = new IntentFilter("com.dutt");
+        stopReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 mPlayPause.setImageDrawable(mPlayDrawable);
@@ -275,7 +297,27 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             }
         };
 
-        registerReceiver(stopReceiver,iFilter);
+        registerReceiver(stopReceiver, iFilter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_info) {
+            showInfoDialog();
+            return true;
+        } else
+            return super.onOptionsItemSelected(item);
+    }
+
+    private void showInfoDialog() {
+        ShareDialog dialog=new ShareDialog();
+        dialog.show(getSupportFragmentManager(),"shared");
     }
 
     @Override
@@ -283,9 +325,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         super.onPause();
         try {
             unregisterReceiver(stopReceiver);
-        }
-        catch (IllegalStateException e)
-        {
+        } catch (IllegalStateException e) {
             Log.e(TAG, "onPause: ", e);
         }
 
@@ -409,8 +449,10 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             return;
         }
         LogHelper.d(TAG, "updateMediaDescription called ");
-        mLine1.setText(description.getTitle());
+       // mLine1.setText(description.getTitle());
+        getSupportActionBar().setTitle(description.getTitle());
         mLine2.setText(description.getSubtitle());
+        txtLyrics.setText(description.getDescription());
         fetchImageAsync(description);
     }
 
@@ -420,7 +462,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         }
         LogHelper.d(TAG, "updateDuration called ");
         int duration = (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
-            mSeekbar.setMax(duration);
+        mSeekbar.setMax(duration);
         mEnd.setText(DateUtils.formatElapsedTime(duration / 1000));
     }
 
@@ -437,7 +479,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                 mPlayPause.setVisibility(VISIBLE);
                 mPlayPause.setImageDrawable(mPauseDrawable);
                 mControllers.setVisibility(VISIBLE);
-                 scheduleSeekbarUpdate();
+                scheduleSeekbarUpdate();
                 break;
             case PlaybackStateCompat.STATE_PAUSED:
                 mControllers.setVisibility(VISIBLE);
@@ -484,7 +526,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                     mLastPlaybackState.getLastPositionUpdateTime();
             currentPosition += (int) timeDelta * mLastPlaybackState.getPlaybackSpeed();
         }
-        Log.v(TAG, "Curerent Pos: "+currentPosition);
+        Log.v(TAG, "Curerent Pos: " + currentPosition);
         mSeekbar.setProgress((int) currentPosition);
     }
 }
