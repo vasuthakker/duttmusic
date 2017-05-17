@@ -192,6 +192,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         mSkipNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                txtLyrics.setScrollY(0);
                 MediaControllerCompat.TransportControls controls =
                         getSupportMediaController().getTransportControls();
                 controls.skipToNext();
@@ -201,6 +202,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         mSkipPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                txtLyrics.setScrollY(0);
                 MediaControllerCompat.TransportControls controls =
                         getSupportMediaController().getTransportControls();
                 controls.skipToPrevious();
@@ -260,6 +262,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
 
         txtLyrics.setMovementMethod(new ScrollingMovementMethod());
+
 
 
 
