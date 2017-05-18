@@ -21,5 +21,6 @@
         android:title="@string/media_route_menu_title"
         app:showAsAction="always"
         android:icon="@drawable/ic_info"
-        android:visible="false"/>
+        android:visible="true"
+        />
 </menu>
