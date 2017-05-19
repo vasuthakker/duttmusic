@@ -35,6 +35,7 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -62,7 +63,6 @@ import java.util.concurrent.TimeUnit;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
-import static com.example.android.uamp.R.id.textView;
 
 /**
  * A full screen player that shows the current playing music with a background image
@@ -73,17 +73,14 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private static final long PROGRESS_UPDATE_INTERNAL = 1000;
     private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 100;
 
-    private ImageView mSkipPrev;
-    private ImageView mSkipNext;
-    private ImageView mPlayPause;
+
+    private ImageView mPlayPause,imgInfo;
     private TextView mStart;
     private TextView mEnd;
+    private TextView txtLyrics1;
     private SeekBar mSeekbar;
-    private TextView mLine1;
     private TextView mLine2;
-    private TextView mLine3;
-    private TextView txtLyrics;
-    private ProgressBar mLoading;
+    //private TextView txtLyrics;
     private View mControllers;
     private Drawable mPauseDrawable;
     private Drawable mPlayDrawable;
@@ -146,7 +143,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         initializeToolbar();
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+            getSupportActionBar().setTitle("");
         }
 
         mAdView = (AdView) findViewById(R.id.insideadView);
@@ -173,41 +170,20 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             requestNewInterstitial();
         }
 
+        imgInfo= (ImageView) findViewById(R.id.toolbar_info);
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         mPauseDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_pause_white_48dp);
         mPlayDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_play_arrow_white_48dp);
         mPlayPause = (ImageView) findViewById(R.id.play_pause);
-        mSkipNext = (ImageView) findViewById(R.id.next);
-        mSkipPrev = (ImageView) findViewById(R.id.prev);
         mStart = (TextView) findViewById(R.id.startText);
         mEnd = (TextView) findViewById(R.id.endText);
         mSeekbar = (SeekBar) findViewById(R.id.seekBar1);
-        mLine1 = (TextView) findViewById(R.id.line1);
         mLine2 = (TextView) findViewById(R.id.line2);
-        mLine3 = (TextView) findViewById(R.id.line3);
-        mLoading = (ProgressBar) findViewById(R.id.progressBar1);
-        txtLyrics= (TextView) findViewById(R.id.full_txtlyrics);
+        txtLyrics1 = (TextView) findViewById(R.id.full_lyrics1);
+        txtLyrics1.setMovementMethod(new ScrollingMovementMethod());
+        //txtLyrics= (TextView) findViewById(R.id.full_txtlyrics);
         mControllers = findViewById(R.id.controllers);
 
-        mSkipNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txtLyrics.setScrollY(0);
-                MediaControllerCompat.TransportControls controls =
-                        getSupportMediaController().getTransportControls();
-                controls.skipToNext();
-            }
-        });
-
-        mSkipPrev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txtLyrics.setScrollY(0);
-                MediaControllerCompat.TransportControls controls =
-                        getSupportMediaController().getTransportControls();
-                controls.skipToPrevious();
-            }
-        });
 
         mPlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -261,13 +237,11 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         mMediaBrowser = new MediaBrowserCompat(this,
                 new ComponentName(this, MusicService.class), mConnectionCallback, null);
 
-        txtLyrics.setMovementMethod(new ScrollingMovementMethod());
-
-
+        //  txtLyrics.setMovementMethod(new ScrollingMovementMethod());
 
 
         // TODO: 15-05-2017 Remove Code
-       /* TextView hariCassets = (TextView) findViewById(R.id.hari_cassets);
+        TextView hariCassets = (TextView) findViewById(R.id.hari_cassets);
         if (hariCassets != null) {
             hariCassets.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -276,7 +250,14 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                     startActivity(browserIntent);
                 }
             });
-        }*/
+        }
+
+        imgInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInfoDialog();
+            }
+        });
     }
 
     private void requestNewInterstitial() {
@@ -303,13 +284,13 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         registerReceiver(stopReceiver, iFilter);
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    }*/
 
-    @Override
+  /*  @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_info) {
             showInfoDialog();
@@ -317,10 +298,10 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         } else
             return super.onOptionsItemSelected(item);
     }
-
+*/
     private void showInfoDialog() {
-        ShareDialog dialog=new ShareDialog();
-        dialog.show(getSupportFragmentManager(),"shared");
+        ShareDialog dialog = new ShareDialog();
+        dialog.show(getSupportFragmentManager(), "shared");
     }
 
     @Override
@@ -452,10 +433,9 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             return;
         }
         LogHelper.d(TAG, "updateMediaDescription called ");
-       // mLine1.setText(description.getTitle());
-        getSupportActionBar().setTitle(description.getTitle());
-        mLine2.setText(description.getSubtitle());
-        txtLyrics.setText(description.getDescription());
+        // mLine1.setText(description.getTitle());
+        mLine2.setText(description.getTitle());
+        txtLyrics1.setText(Html.fromHtml(description.getDescription().toString()));
         fetchImageAsync(description);
     }
 
@@ -478,7 +458,6 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
 
         switch (state.getState()) {
             case PlaybackStateCompat.STATE_PLAYING:
-                mLoading.setVisibility(INVISIBLE);
                 mPlayPause.setVisibility(VISIBLE);
                 mPlayPause.setImageDrawable(mPauseDrawable);
                 mControllers.setVisibility(VISIBLE);
@@ -486,14 +465,12 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                 break;
             case PlaybackStateCompat.STATE_PAUSED:
                 mControllers.setVisibility(VISIBLE);
-                mLoading.setVisibility(INVISIBLE);
                 mPlayPause.setVisibility(VISIBLE);
                 mPlayPause.setImageDrawable(mPlayDrawable);
                 stopSeekbarUpdate();
                 break;
             case PlaybackStateCompat.STATE_NONE:
             case PlaybackStateCompat.STATE_STOPPED:
-                mLoading.setVisibility(INVISIBLE);
                 mPlayPause.setVisibility(VISIBLE);
                 mPlayPause.setImageDrawable(mPlayDrawable);
                 stopSeekbarUpdate();
@@ -501,8 +478,6 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                 break;
             case PlaybackStateCompat.STATE_BUFFERING:
                 mPlayPause.setVisibility(INVISIBLE);
-                mLoading.setVisibility(VISIBLE);
-                mLine3.setText(R.string.loading);
                 stopSeekbarUpdate();
                 break;
             default:

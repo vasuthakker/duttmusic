@@ -19,6 +19,7 @@ package com.example.android.uamp.model;
 import android.support.v4.media.MediaMetadataCompat;
 
 import com.example.android.uamp.interfaces.DataProvider;
+import com.example.android.uamp.provider.SongProvider;
 import com.example.android.uamp.utils.LogHelper;
 
 import org.json.JSONException;
@@ -33,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import uamp.provider.SongProvider;
 
 /**
  * Utility class to get a list of MusicTrack's based on a server-side JSON

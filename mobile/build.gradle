@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
     defaultConfig {
-        applicationId "com.vk.jalram"
+        applicationId 'com.rohan.dattbavni'
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 2
@@ -25,20 +25,10 @@ android {
         }
     }
     productFlavors {
-        dattbavni {
-            applicationId 'com.rohan.dattbavni'
+        anand {
+            applicationId 'com.rohan.anand'
         }
-        songapp {
-        }
-        sleeping {
-            applicationId 'com.vktechs.sleepingtunes'
-            versionCode 1
-            versionName "1"
-        }
-        jalaram {
-            applicationId 'com.vk.jalram'
-            versionCode 3
-            versionName "1.2"
+        duttbavni {
         }
     }
 }

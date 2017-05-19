@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pageView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,116 +24,109 @@ limitations under the License.
 
     <ImageView
         android:id="@+id/background_image"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:visibility="gone" />
+        android:visibility="gone"
+        ads:layout_constraintBottom_toTopOf="parent"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toLeftOf="parent"
+        ads:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/ic_bgtoolbar"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        ads:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/toolbar_info"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_info" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/insideadView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:visibility="visible"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/insdie_ad"
+        ads:layout_constraintBottom_toTopOf="@+id/full_bottomlayout"
+        ads:layout_constraintHorizontal_bias="0.0"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/full_lyrics1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
+        android:gravity="center"
+        android:scrollbars="vertical"
+        android:shadowColor="@android:color/white"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        ads:layout_constraintBottom_toTopOf="@+id/insideadView"
+        ads:layout_constraintHorizontal_bias="0.5"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/toolbar"
+        ads:layout_constraintVertical_bias="0.501" />
 
 
     <RelativeLayout
         android:id="@+id/full_bottomlayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/toolbar">
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintHorizontal_bias="1.0"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/insideadView"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginBottom="5dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/datt1" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/datt2" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/datt3" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/datt4" />
-            </LinearLayout>
-        </ScrollView>
-
-        <TextView
-            android:id="@+id/line1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-
-            android:ellipsize="end"
-            android:gravity="center_horizontal"
-            android:maxLines="1"
-            android:shadowColor="@android:color/black"
-            android:shadowDx="5"
-            android:shadowDy="5"
-            android:shadowRadius="10"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/fullscreen_line_color"
-            android:visibility="gone" />
-
-
-        <TextView
-            android:id="@+id/line3"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/insideadView"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center_horizontal"
-            android:maxLines="1"
-            android:shadowColor="@android:color/black"
-            android:shadowRadius="20"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/fullscreen_secondary_line_color"
-            android:visibility="gone" />
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/insideadView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/controllers"
-            android:layout_gravity="center_horizontal"
-            android:visibility="visible"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/insdie_ad" />
 
         <RelativeLayout
             android:id="@+id/controllers"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="120dp"
             android:layout_alignParentBottom="true"
             android:background="@color/colorPrimary">
 
@@ -171,9 +165,10 @@ limitations under the License.
 
 
             <ImageView
+
                 android:id="@+id/play_pause"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="60dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -224,46 +219,9 @@ limitations under the License.
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/prev"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/skip_prev"
-                    android:src="@drawable/ic_skip_previous_white_48dp"
-                    android:visibility="invisible" />
-
-
-                <ImageView
-                    android:id="@+id/next"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/skip_next"
-                    android:src="@drawable/ic_skip_next_white_48dp"
-                    android:visibility="invisible" />
-
-            </LinearLayout>
-
         </RelativeLayout>
 
     </RelativeLayout>
 
-    <ProgressBar
 
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -309,8 +309,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
                 .setContentIntent(createContentIntent(description))
                 .setContentTitle(description.getTitle())
                 .setContentText(description.getSubtitle())
-                .setLargeIcon(art);
-        //.setLargeIcon(BitmapFactory.decodeResource(mService.getResources(),R.drawable.ic_hari));
+                .setLargeIcon(BitmapFactory.decodeResource(mService.getResources(), R.drawable.ic_hari));
 
 
         setNotificationPlaybackState(notificationBuilder);
@@ -351,8 +350,8 @@ public class MediaNotificationManager extends BroadcastReceiver {
                     (System.currentTimeMillis() - mPlaybackState.getPosition()) / 1000, " seconds");
             builder
                     .setWhen(System.currentTimeMillis() - mPlaybackState.getPosition())
-                    .setShowWhen(true)
-                    .setUsesChronometer(true);
+                    .setShowWhen(false)
+                    .setUsesChronometer(false);
         } else {
             LogHelper.d(TAG, "updateNotificationPlaybackState. hiding playback position");
             builder
