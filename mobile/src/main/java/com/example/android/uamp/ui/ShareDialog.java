@@ -8,12 +8,15 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.android.uamp.R;
 
@@ -44,6 +47,16 @@ public class ShareDialog extends DialogFragment {
         imgWhats.setOnClickListener(shareWithService("whatsapp"));
         imgGPlus.setOnClickListener(shareWithService("apps.plus"));
         imgTwi.setOnClickListener(shareWithService("twitter"));
+
+        TextView txtCall= (TextView) dialog.findViewById(R.id.share_txtcall);
+
+        txtCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", getString(R.string.creator), null));
+                startActivity(intent);
+            }
+        });
 
 
 
