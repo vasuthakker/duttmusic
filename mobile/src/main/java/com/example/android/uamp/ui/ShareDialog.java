@@ -7,7 +7,9 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.PaintDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -47,6 +49,7 @@ public class ShareDialog extends DialogFragment {
         imgWhats.setOnClickListener(shareWithService("whatsapp"));
         imgGPlus.setOnClickListener(shareWithService("apps.plus"));
         imgTwi.setOnClickListener(shareWithService("twitter"));
+        TextView txtSite= (TextView) dialog.findViewById(R.id.share_txtsite);
 
         TextView txtCall= (TextView) dialog.findViewById(R.id.share_txtcall);
 
@@ -55,6 +58,16 @@ public class ShareDialog extends DialogFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", getString(R.string.creator), null));
                 startActivity(intent);
+            }
+        });
+
+        txtSite.setPaintFlags(txtSite.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+
+        txtSite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.piyushranafilms.com/"));
+                startActivity(browserIntent);
             }
         });
 

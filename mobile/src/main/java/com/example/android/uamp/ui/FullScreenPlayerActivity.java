@@ -42,6 +42,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -78,6 +79,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private TextView mStart;
     private TextView mEnd;
     private TextView txtLyrics1;
+    private Button btnShare;
     private SeekBar mSeekbar;
     private TextView mLine2;
     //private TextView txtLyrics;
@@ -180,9 +182,10 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         mSeekbar = (SeekBar) findViewById(R.id.seekBar1);
         mLine2 = (TextView) findViewById(R.id.line2);
         txtLyrics1 = (TextView) findViewById(R.id.full_lyrics1);
-        txtLyrics1.setMovementMethod(new ScrollingMovementMethod());
+        //txtLyrics1.setMovementMethod(new ScrollingMovementMethod());
         //txtLyrics= (TextView) findViewById(R.id.full_txtlyrics);
         mControllers = findViewById(R.id.controllers);
+        btnShare= (Button) findViewById(R.id.full_share);
 
 
         mPlayPause.setOnClickListener(new View.OnClickListener() {
@@ -253,6 +256,13 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         }
 
         imgInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInfoDialog();
+            }
+        });
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showInfoDialog();
