@@ -39,11 +39,9 @@ import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -51,7 +49,6 @@ import com.example.android.uamp.AlbumArtCache;
 import com.example.android.uamp.MusicService;
 import com.example.android.uamp.R;
 import com.example.android.uamp.utils.LogHelper;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -74,7 +71,8 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 100;
 
 
-    private ImageView mPlayPause,imgInfo;
+    private Button btnShare;
+    private ImageView mPlayPause, imgInfo;
     private TextView mStart;
     private TextView mEnd;
     private TextView txtLyrics1;
@@ -151,7 +149,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             //addTestDevice("D830752B3AD17900C65115E56D4C8568")
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
-            mInterstitialAd = new InterstitialAd(this);
+         /*   mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId(getString(R.string.fullad));
             mInterstitialAd.setAdListener(new AdListener() {
                 @Override
@@ -166,11 +164,11 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                     super.onAdLoaded();
                     mInterstitialAd.show();
                 }
-            });
-            requestNewInterstitial();
+            });*/
+            //requestNewInterstitial();
         }
 
-        imgInfo= (ImageView) findViewById(R.id.toolbar_info);
+        imgInfo = (ImageView) findViewById(R.id.toolbar_info);
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         mPauseDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_pause_white_48dp);
         mPlayDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_play_arrow_white_48dp);
@@ -181,6 +179,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         mLine2 = (TextView) findViewById(R.id.line2);
         txtLyrics1 = (TextView) findViewById(R.id.full_lyrics1);
         txtLyrics1.setMovementMethod(new ScrollingMovementMethod());
+        btnShare = (Button) findViewById(R.id.full_btnshare);
         //txtLyrics= (TextView) findViewById(R.id.full_txtlyrics);
         mControllers = findViewById(R.id.controllers);
 
@@ -258,12 +257,18 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                 showInfoDialog();
             }
         });
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInfoDialog();
+            }
+        });
     }
 
-    private void requestNewInterstitial() {
+   /* private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
-    }
+    }*/
 
     @Override
     public void onResume() {
@@ -290,15 +295,15 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         return true;
     }*/
 
-  /*  @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_info) {
-            showInfoDialog();
-            return true;
-        } else
-            return super.onOptionsItemSelected(item);
-    }
-*/
+    /*  @Override
+      public boolean onOptionsItemSelected(MenuItem item) {
+          if (item.getItemId() == R.id.menu_info) {
+              showInfoDialog();
+              return true;
+          } else
+              return super.onOptionsItemSelected(item);
+      }
+  */
     private void showInfoDialog() {
         ShareDialog dialog = new ShareDialog();
         dialog.show(getSupportFragmentManager(), "shared");

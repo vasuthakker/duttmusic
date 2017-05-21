@@ -44,7 +44,7 @@
     <string name="wifi">available on wifi</string>
     <string name="banner_ad_unit_id">ca-app-pub-4869448739125810/4995886685</string>
 
-    <string name="share_message">Share this application to your family and friends</string>
+    <string name="share_message" formatted="false">*%s* સાંભળવા માટે ડાઊનલોડ કરો https://play.google.com/store/apps/details?id=%s </string>
     <string name="more_apps">More Apps</string>
     <string name="ratings">Ratings</string>
     <string name="parichay">About</string>
@@ -56,5 +56,7 @@
 
     <string name="insdie_ad">ca-app-pub-4990243882809131/6090487208</string>
     <string name="fullad">ca-app-pub-4869448739125810/3398389083</string>
+    <string name="share_text">એપ્લિકેશન ગમે તો શેર કરો</string>
+    <string name="site">www.piyushranafilms.com</string>
 
 </resources>

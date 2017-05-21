@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.android.uamp.R;
 
 import java.util.List;
@@ -42,13 +41,17 @@ public class ShareDialog extends DialogFragment {
         ImageView imgWhats = (ImageView) dialog.findViewById(R.id.share_imgwhats);
         ImageView imgGPlus = (ImageView) dialog.findViewById(R.id.share_imggplus);
         ImageView imgTwi = (ImageView) dialog.findViewById(R.id.share_imgtwi);
+        ImageView imgRatings= (ImageView) dialog.findViewById(R.id.ratingBar);
 
         imgFb.setOnClickListener(shareWithService("facebook"));
         imgWhats.setOnClickListener(shareWithService("whatsapp"));
         imgGPlus.setOnClickListener(shareWithService("apps.plus"));
         imgTwi.setOnClickListener(shareWithService("twitter"));
 
+
         TextView txtCall= (TextView) dialog.findViewById(R.id.share_txtcall);
+
+        TextView txtLink= (TextView) dialog.findViewById(R.id.share_txtlink);
 
         txtCall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,9 +61,33 @@ public class ShareDialog extends DialogFragment {
             }
         });
 
+        txtLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.piyushranafilms.com/"));
+                startActivity(browserIntent);
+            }
+        });
+
+        imgRatings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                visitGooglePlayAppPage();
+            }
+        });
 
 
         return dialog;
+    }
+
+    private void visitGooglePlayAppPage()
+    {
+        final String appPackageName = getActivity().getPackageName(); // getPackageName() from Context or Activity object
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
     }
 
     private View.OnClickListener shareWithService(final String service) {
@@ -69,7 +96,7 @@ public class ShareDialog extends DialogFragment {
             public void onClick(View v) {
                 Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.share_message));
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, String.format(getString(R.string.share_message),getString(R.string.app_name),getActivity().getPackageName()));
                 PackageManager pm = getActivity().getPackageManager();
                 List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
                 boolean isFound=false;
