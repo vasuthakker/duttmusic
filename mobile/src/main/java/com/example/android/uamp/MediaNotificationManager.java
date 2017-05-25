@@ -309,7 +309,7 @@ public class MediaNotificationManager extends BroadcastReceiver {
                 .setContentIntent(createContentIntent(description))
                 .setContentTitle(description.getTitle())
                 .setContentText(description.getSubtitle())
-                .setLargeIcon(BitmapFactory.decodeResource(mService.getResources(), R.drawable.ic_hari));
+                .setLargeIcon(BitmapFactory.decodeResource(mService.getResources(), R.drawable.app_icon));
 
 
         setNotificationPlaybackState(notificationBuilder);
