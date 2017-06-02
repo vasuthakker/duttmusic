@@ -27,6 +27,8 @@ android {
     productFlavors {
         anand {
             applicationId 'com.rohan.anand'
+            versionCode 4
+            versionName "1.3"
         }
         duttbavni {
         }
