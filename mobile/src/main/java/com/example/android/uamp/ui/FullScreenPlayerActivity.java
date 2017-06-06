@@ -37,14 +37,10 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.Html;
 import android.text.format.DateUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -52,10 +48,8 @@ import com.example.android.uamp.AlbumArtCache;
 import com.example.android.uamp.MusicService;
 import com.example.android.uamp.R;
 import com.example.android.uamp.utils.LogHelper;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -106,7 +100,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private ScheduledFuture<?> mScheduleFuture;
     private PlaybackStateCompat mLastPlaybackState;
 
-    private InterstitialAd mInterstitialAd;
+  //  private InterstitialAd mInterstitialAd;
 
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
         @Override
@@ -153,7 +147,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             //addTestDevice("D830752B3AD17900C65115E56D4C8568")
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
-            mInterstitialAd = new InterstitialAd(this);
+          /*  mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId(getString(R.string.fullad));
             mInterstitialAd.setAdListener(new AdListener() {
                 @Override
@@ -169,7 +163,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                     mInterstitialAd.show();
                 }
             });
-            requestNewInterstitial();
+            requestNewInterstitial();*/
         }
 
         imgInfo= (ImageView) findViewById(R.id.toolbar_info);
@@ -270,10 +264,10 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         });
     }
 
-    private void requestNewInterstitial() {
+    /*private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
-    }
+    }*/
 
     @Override
     public void onResume() {
