@@ -58,6 +58,6 @@
     <string name="site">www.piyushranafilms.com</string>
     <string name="share_text">એપ્લિકેશન પસંદ આવી હોય તો શેર કરો</string>
     <string name="share_message" formatted="false">*%s* સાંભળવા માટે ડાઊનલોડ કરો https://play.google.com/store/apps/details?id=%s</string>
-    <string name="rate_us">Rate US</string>
+    <string name="rate_us">Rate us</string>
 
 </resources>
