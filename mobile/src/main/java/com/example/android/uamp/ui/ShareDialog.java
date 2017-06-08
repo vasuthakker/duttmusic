@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,17 +42,15 @@ public class ShareDialog extends DialogFragment {
         ImageView imgWhats = (ImageView) dialog.findViewById(R.id.share_imgwhats);
         ImageView imgGPlus = (ImageView) dialog.findViewById(R.id.share_imggplus);
         ImageView imgTwi = (ImageView) dialog.findViewById(R.id.share_imgtwi);
-        ImageView imgRatings= (ImageView) dialog.findViewById(R.id.ratingBar);
+        ImageView imgRate= (ImageView) dialog.findViewById(R.id.share_imgrate);
 
         imgFb.setOnClickListener(shareWithService("facebook"));
         imgWhats.setOnClickListener(shareWithService("whatsapp"));
         imgGPlus.setOnClickListener(shareWithService("apps.plus"));
         imgTwi.setOnClickListener(shareWithService("twitter"));
-
+        TextView txtSite= (TextView) dialog.findViewById(R.id.share_txtsite);
 
         TextView txtCall= (TextView) dialog.findViewById(R.id.share_txtcall);
-
-        TextView txtLink= (TextView) dialog.findViewById(R.id.share_txtlink);
 
         txtCall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +60,9 @@ public class ShareDialog extends DialogFragment {
             }
         });
 
-        txtLink.setOnClickListener(new View.OnClickListener() {
+        txtSite.setPaintFlags(txtSite.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+
+        txtSite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.piyushranafilms.com/"));
@@ -69,7 +70,7 @@ public class ShareDialog extends DialogFragment {
             }
         });
 
-        imgRatings.setOnClickListener(new View.OnClickListener() {
+        imgRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 visitGooglePlayAppPage();
@@ -77,8 +78,10 @@ public class ShareDialog extends DialogFragment {
         });
 
 
+
         return dialog;
     }
+
 
     private void visitGooglePlayAppPage()
     {
@@ -96,7 +99,7 @@ public class ShareDialog extends DialogFragment {
             public void onClick(View v) {
                 Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, String.format(getString(R.string.share_message),getString(R.string.app_name),getActivity().getPackageName()));
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, String.format(getString(R.string.share_message), getString(R.string.app_name), getActivity().getPackageName()));
                 PackageManager pm = getActivity().getPackageManager();
                 List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
                 boolean isFound=false;

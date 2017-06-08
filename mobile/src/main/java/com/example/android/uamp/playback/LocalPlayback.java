@@ -327,10 +327,10 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
             }
         } else {  // we have audio focus:
             registerAudioNoisyReceiver();
-            if (mAudioFocus == AUDIO_NO_FOCUS_CAN_DUCK) {
-                mMediaPlayer.setVolume(VOLUME_DUCK, VOLUME_DUCK); // we'll be relatively quiet
-            } else {
-                if (mMediaPlayer != null) {
+            if (mMediaPlayer != null) {
+                if (mAudioFocus == AUDIO_NO_FOCUS_CAN_DUCK) {
+                    mMediaPlayer.setVolume(VOLUME_DUCK, VOLUME_DUCK); // we'll be relatively quiet
+                } else {
                     mMediaPlayer.setVolume(VOLUME_NORMAL, VOLUME_NORMAL); // we can be loud again
                 } // else do something for remote client.
             }

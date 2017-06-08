@@ -17,7 +17,7 @@ public class SongProvider implements DataProvider {
     @Override
     public List<SongEntity> getSongs() {
         List<SongEntity> songList = new ArrayList<>();
-        songList.add(new SongEntity("Dutt Bavani", "Jalaram", "Hari Cassettes", "datt.mp3", "", 1, 1, 442,0));
+        songList.add(new SongEntity("Dutt Bavani",Lyrics.lyrics, "Hari Cassettes", "datt.mp3", "", 1, 1, 442,0));
         return songList;
     }
 
