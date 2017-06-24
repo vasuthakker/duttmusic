@@ -129,7 +129,8 @@ limitations under the License.
                 android:layout_marginRight="35dp"
                 android:background="@color/colorPrimaryDark"
                 android:text="@string/share_text"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:visibility="invisible" />
         </LinearLayout>
     </ScrollView>
 

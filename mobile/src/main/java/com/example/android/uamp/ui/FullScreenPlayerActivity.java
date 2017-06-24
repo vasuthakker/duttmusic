@@ -48,8 +48,10 @@ import com.example.android.uamp.AlbumArtCache;
 import com.example.android.uamp.MusicService;
 import com.example.android.uamp.R;
 import com.example.android.uamp.utils.LogHelper;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -69,7 +71,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private static final long PROGRESS_UPDATE_INITIAL_INTERVAL = 100;
 
 
-    private ImageView mPlayPause,imgInfo;
+    private ImageView mPlayPause, imgInfo;
     private TextView mStart;
     private TextView mEnd;
     private TextView txtLyrics1;
@@ -86,7 +88,8 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private String mCurrentArtUrl;
     private final Handler mHandler = new Handler();
     private MediaBrowserCompat mMediaBrowser;
-
+    private Handler handler;
+    private InterstitialAd mInterstitialAd;
     private final Runnable mUpdateProgressTask = new Runnable() {
         @Override
         public void run() {
@@ -100,7 +103,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
     private ScheduledFuture<?> mScheduleFuture;
     private PlaybackStateCompat mLastPlaybackState;
 
-  //  private InterstitialAd mInterstitialAd;
+    //  private InterstitialAd mInterstitialAd;
 
     private final MediaControllerCompat.Callback mCallback = new MediaControllerCompat.Callback() {
         @Override
@@ -132,6 +135,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             };
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,13 +151,11 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             //addTestDevice("D830752B3AD17900C65115E56D4C8568")
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
-          /*  mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId(getString(R.string.fullad));
             mInterstitialAd.setAdListener(new AdListener() {
                 @Override
                 public void onAdClosed() {
-                    // requestNewInterstitial();
-                    // beginPlayingGame();
                     Log.d(TAG, "onAdClosed: ");
                 }
 
@@ -163,10 +165,9 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                     mInterstitialAd.show();
                 }
             });
-            requestNewInterstitial();*/
         }
 
-        imgInfo= (ImageView) findViewById(R.id.toolbar_info);
+        imgInfo = (ImageView) findViewById(R.id.toolbar_info);
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         mPauseDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_pause_white_48dp);
         mPlayDrawable = ContextCompat.getDrawable(this, R.drawable.uamp_ic_play_arrow_white_48dp);
@@ -179,7 +180,7 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         //txtLyrics1.setMovementMethod(new ScrollingMovementMethod());
         //txtLyrics= (TextView) findViewById(R.id.full_txtlyrics);
         mControllers = findViewById(R.id.controllers);
-        btnShare= (Button) findViewById(R.id.full_share);
+        btnShare = (Button) findViewById(R.id.full_share);
 
 
         mPlayPause.setOnClickListener(new View.OnClickListener() {
@@ -262,12 +263,23 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
                 showInfoDialog();
             }
         });
+
+
+
+
     }
 
-    /*private void requestNewInterstitial() {
+    private Runnable btnVisiblity = new Runnable() {
+        @Override
+        public void run() {
+            btnShare.setVisibility(View.VISIBLE);
+        }
+    };
+
+    private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
-    }*/
+    }
 
     @Override
     public void onResume() {
@@ -285,6 +297,9 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             }
         };
 
+        handler = new Handler();
+        handler.postDelayed(btnVisiblity, 2000);
+
         registerReceiver(stopReceiver, iFilter);
     }
 
@@ -294,15 +309,15 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         return true;
     }*/
 
-  /*  @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_info) {
-            showInfoDialog();
-            return true;
-        } else
-            return super.onOptionsItemSelected(item);
-    }
-*/
+    /*  @Override
+      public boolean onOptionsItemSelected(MenuItem item) {
+          if (item.getItemId() == R.id.menu_info) {
+              showInfoDialog();
+              return true;
+          } else
+              return super.onOptionsItemSelected(item);
+      }
+  */
     private void showInfoDialog() {
         ShareDialog dialog = new ShareDialog();
         dialog.show(getSupportFragmentManager(), "shared");
@@ -317,10 +332,13 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
             Log.e(TAG, "onPause: ", e);
         }
 
+        handler.removeCallbacks(btnVisiblity);
+
     }
 
     @Override
     public void onBackPressed() {
+        requestNewInterstitial();
         finish();
     }
 
@@ -511,4 +529,6 @@ public class FullScreenPlayerActivity extends ActionBarCastActivity {
         Log.v(TAG, "Curerent Pos: " + currentPosition);
         mSeekbar.setProgress((int) currentPosition);
     }
+
+
 }
