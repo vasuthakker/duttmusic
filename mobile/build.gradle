@@ -31,6 +31,8 @@ android {
             versionName "1.4"
         }
         duttbavni {
+            versionCode 1
+            versionName "1.0"
         }
     }
 }
