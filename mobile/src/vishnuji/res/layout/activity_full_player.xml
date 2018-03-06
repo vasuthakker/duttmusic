@@ -50,7 +50,7 @@ limitations under the License.
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -117,10 +117,10 @@ limitations under the License.
                 android:shadowColor="@android:color/white"
                 android:shadowDx="1"
                 android:shadowDy="1"
-                android:visibility="gone"
+                android:textStyle="bold"
                 android:shadowRadius="2"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/full_share"
